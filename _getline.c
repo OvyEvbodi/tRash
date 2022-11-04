@@ -15,6 +15,8 @@ ssize_t _getline(char **line_buff, ssize_t *capacity, size_t stream)
 {
 	ssize_t position = 0;
 
+	if ((*capacity) <= 0)
+		*capacity = BUFSIZ;
 	/*allocate mem only when needed*/
 	if (!(*line_buff))
 	{
@@ -30,8 +32,6 @@ ssize_t _getline(char **line_buff, ssize_t *capacity, size_t stream)
 			exit(EXIT_FAILURE);
 		}
 	}
-	if ((*capacity) <= 0)
-		*capacity = BUFSIZ;
 
 	do {
 		/*reallocate mem when needed*/

@@ -34,7 +34,7 @@ int main(void)
 	cwd++;
 
 	do {
-		printf("Trash :%s (%s)\n$$>> ", cwd, __DATE__);
+		dprintf(STDERR_FILENO, "Trash :%s (%s)\n$$>> ", cwd, __DATE__);
 		line = reline(len);
 		if (*line == '\n')
 		{
@@ -45,6 +45,6 @@ int main(void)
 		free(line);
 
  	} while (line_len > 0);
-	//return (0);
+	return (0);
 	
 }
