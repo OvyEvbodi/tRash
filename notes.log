@@ -1,0 +1,11 @@
+Fri Nov  4 12:50:08 2022
+ Line 32 in _getline file, we could return -1 since it'll mean _getline failed.
+ We wouldnt want to exit our program.
+Fri Nov  4 13:14:44 2022
+ If _realloc fails, we would want to free the original malloced memory before returning -1.
+
+Fri Nov  4 13:24:10 2022
+ In the case of an error in _getline, we may also want to set *line_buff to NULL.
+ That way we check if it is NULL in main() and then continue.
+ There will be no need to free anything in main().
+
