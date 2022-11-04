@@ -42,9 +42,12 @@ int main(void)
 			continue;
 		}
 		printf("your eff'd up line--> %s\n", line);
+		line = NULL;
 		free(line);
 
  	} while (line_len > 0);
+	free(cwd);
+
 	return (0);
 	
 }
