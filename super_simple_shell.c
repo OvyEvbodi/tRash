@@ -35,19 +35,20 @@ int main(int ac, char **av)
 	size_t len;
 	int status, i;
 	static unsigned int counter = 0;
-	char *env_path[] = {"PATH=/bin", NULL};
 
 /*	check_signal(SIGINT, handle_INT); */
 	while (1)
 	{
 		buffer = NULL;
 		len = 0, i = 0;
-		write(1, "-->$ ", 5);
+		write(1, "tRash-->$ ", 10);
 
 		if (getline(&buffer, &len, stdin) == -1)
 		{
 			free(buffer);
-			continue;
+			write(1, "\n", 1);
+			exit(EXIT_SUCCESS);
+			//continue;
 		}
 
 		arr_tokens = malloc(64 * sizeof(char *));
@@ -92,7 +93,7 @@ int main(int ac, char **av)
 		ssize_t pid = fork();
 		if (!pid)
 		{
-			if (execve(arr_tokens[0], arr_tokens, env_path) == -1)
+			if (execve(arr_tokens[0], arr_tokens, NULL) == -1)
 			{
 				dprintf(2, "%s: %u: not found\n", av[0], ++counter);
 				free(arr_tokens);
