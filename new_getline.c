@@ -12,6 +12,7 @@ ssize_t __getline(char **line_buff, size_t *capacity, FILE *stream)
 	tmp_buff = malloc(sizeof(char) * BUFF_SIZE);
 	if (!tmp_buff)
 		return (-1);
+
 	do {
 		rd = read(STDIN_FILENO, &c, 1);
 		if (rd == -1 || (rd == 0 && tot_read == 0))
@@ -25,10 +26,7 @@ ssize_t __getline(char **line_buff, size_t *capacity, FILE *stream)
 		{
 			tmp_buff = _realloc(tmp_buff, buff_extension, buff_extension + 1024);
 			if (!tmp_buff)
-			{
-				free(tmp_buff);
 				return (-1);
-			}
 			buff_extension += 1024;
 		}
 	} while (c != '\n');
