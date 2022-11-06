@@ -16,6 +16,8 @@ ssize_t __getline(char **line_buff, size_t *capacity, FILE *stream)
 			*line_buff = tmp_buff;
 			return (EOF);
 		}
+		if (rd == 0)
+			break;
 
 		tmp_buff[tot_read++] = c;
 		if (tot_read == buff_len)
@@ -26,8 +28,8 @@ ssize_t __getline(char **line_buff, size_t *capacity, FILE *stream)
 			buff_len += 1024;
 		}
 	} while (c != '\n');
-	tmp_buff[tot_read] = '\0';
 
+	tmp_buff[tot_read] = '\0';
 	if (!*line_buff || *capacity < buff_len)
 	{
 		*capacity = buff_len;
