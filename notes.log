@@ -9,3 +9,7 @@ Fri Nov  4 13:24:10 2022
  That way we check if it is NULL in main() and then continue.
  There will be no need to free anything in main().
 
+Sun Nov  6 01:53:24 2022
+ From Chee: For the first loop in _getenv, we may want to check against all
+ characters in the string passed to our function, in case we need it for other
+ vars in the future. _getenv looks great!
