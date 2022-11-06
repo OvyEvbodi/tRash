@@ -6,9 +6,9 @@
 #include <sys/types.h>
 #include <string.h>
 
+ssize_t __getline(char **line_buff, size_t *capacity, FILE *stream);
 char *_strtok(char *str, const char *delim);
 
-/*
 void check_signal(int sig, void (*handler)(int))
 {
 	int reval;
@@ -25,9 +25,8 @@ void check_signal(int sig, void (*handler)(int))
 
 void handle_INT(int sig)
 {
-	exit(0);
 }
-*/
+
 
 int main(int ac, char **av)
 {
@@ -36,19 +35,22 @@ int main(int ac, char **av)
 	int status, i;
 	static unsigned int counter = 0;
 
-/*	check_signal(SIGINT, handle_INT); */
+	check_signal(SIGINT, handle_INT);
 	while (1)
 	{
 		buffer = NULL;
 		len = 0, i = 0;
 		write(1, "tRash-->$ ", 10);
 
-		if (getline(&buffer, &len, stdin) == -1)
+		if (__getline(&buffer, &len, stdin) == -1)
 		{
-			free(buffer);
 			write(1, "\n", 1);
 			exit(EXIT_SUCCESS);
-			//continue;
+		}
+		if (buffer[0] == '\n')
+		{
+			free(buffer);
+			continue;
 		}
 
 		arr_tokens = malloc(64 * sizeof(char *));
