@@ -47,8 +47,8 @@ char *_getenv(char **env_ptr, char *cmd)
 		full_path = _strcat(full_path, cmd);
 		printf(" new full path --> %s\n", full_path);
 		stat(full_path, &sfile);
-		int perm = printf("mode %o\n", sfile.st_mode);
-		if (sfile.st_mode == S_IXUSR)
+		int perm = printf("serial_no %llo\n", sfile.st_ino);
+		if (sfile.st_ino)
 		{
 			break;
 		}
