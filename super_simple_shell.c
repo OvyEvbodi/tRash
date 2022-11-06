@@ -42,6 +42,7 @@ int main(int ac, char **av)
 
 		if (__getline(&buffer, &len, stdin) == -1)
 		{
+			free(buffer);
 			write(1, "\n", 1);
 			exit(EXIT_SUCCESS);
 		}
