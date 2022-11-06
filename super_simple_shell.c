@@ -5,9 +5,7 @@
 #include <sys/wait.h>
 #include <sys/types.h>
 #include <string.h>
-
-ssize_t __getline(char **line_buff, size_t *capacity, FILE *stream);
-char *_strtok(char *str, const char *delim);
+#include "main.h"
 
 void check_signal(int sig, void (*handler)(int))
 {

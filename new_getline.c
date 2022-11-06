@@ -1,9 +1,5 @@
 #include "main.h"
 
-#define BUFF_SIZE 1024
-
-int _strcpy(char *, char *);
-
 ssize_t __getline(char **line_buff, size_t *capacity, FILE *stream)
 {
 	ssize_t rd, tot_read = 0, buff_extension = BUFF_SIZE;
