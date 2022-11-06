@@ -24,5 +24,7 @@ char *_strchr(char *s, char c);
 char *_strcat(char *dest, char *src);
 char **_strtow(char *str);
 char *_strcpy(char *, char *);
+char *_strdup(char *);
+char *str_concat(char *, char *);
 
 #endif /*MAIN_H*/
