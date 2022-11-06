@@ -12,25 +12,27 @@ struct stat sfile;
  * Return: a pointer to an absolute path
 */
 
-char *_getenv(char *cmd)
+char *_getenv(char *cmd, char *var)
 {
 	char **env = environ;
 	char *path = NULL, **path_arr;
 	char *tmp_full_path, *full_path;
-	int i = 0;
+	size_t i = 0, var_len = _strlen(var);
 
 	/*get path from path_arr*/
 	while (*env)
 	{
 		/*printf("%s\n\n", *env);*/
-		if (**env == 'P' && *(*env + 1) == 'A' && *(*env + 2) == 'T' && *(*env + 3) == 'H' && *(*env + 4) == '=')
+		if (_strncmp(*env, var, var_len) == 0)
 		{
-			path = *env;
-			path = path + 5;
+			path = *env + var_len + 1;
 			break;
 		}
 		env++;
 	}
+
+	if (path == NULL)
+		return (NULL);
 
 	path_arr = _strtow(path);
 	if (!path_arr)
@@ -67,14 +69,14 @@ char *_getcmd(char *cmd)
 	if (_strchr(cmd, '/'))
 		path = cmd;
 	else
-		path = _getenv(cmd);
+		path = _getenv(cmd, "PATH");
 
 	return (path);
 }
 
 int main(void)
 {
-	char *path = _getcmd("ls"); //hardcoded for testing purposes. 
+	char *path = _getcmd("ls"); //hardcoded for testing purposes.
 	printf("path from main ---> %s\n", path);
 	free(path);
 	return (0);

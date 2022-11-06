@@ -1,14 +1,4 @@
-#include <unistd.h>
-
-#define VALID_CHAR	1 /* for checking if the passed string */
-#define NO_VALID_CHAR	0 /* constains only delimeters */
-
-size_t _strlen(char *str)
-{
-	if (!*str)
-		return (0);
-	return (1 + _strlen(str + 1));
-}
+#include "main.h"
 
 char *_strtok(char *str, const char *delim)
 {

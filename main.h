@@ -11,6 +11,8 @@
 #include <sys/stat.h>
 
 #define BUFF_SIZE	1024
+#define VALID_CHAR	1
+#define NO_VALID_CHAR	0
 
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 ssize_t _getline(char **line_buff, ssize_t *capacity, size_t stream);
@@ -26,5 +28,6 @@ char **_strtow(char *str);
 char *_strcpy(char *, char *);
 char *_strdup(char *);
 char *str_concat(char *, char *);
+int _strncmp(char *, char *, size_t);
 
 #endif /*MAIN_H*/
