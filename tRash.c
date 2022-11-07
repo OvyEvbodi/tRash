@@ -71,7 +71,7 @@ char *full_cmd(char *cmd, char *path)
  *
  * Return: Format in which command can be run, or NULL if it fails.
  */
-char *_getcmd(char *cmd, char **env)
+char *_getcmd(char *cmd, char **arr_tokens, char **env)
 {
 	char *path, *var_val;
 
@@ -152,25 +152,25 @@ char *get_tokens(char *buffer, char ***arr_tokens)
  *
  * Return: 0 on success, -1 if it fails.
  */
-int change_dir(char **arr_tokens, char **env)
-{
-	char *var_val;
+// int change_dir(char **arr_tokens, char **env)
+// {
+// 	char *var_val;
 
-	if (arr_tokens[2])
-		return (-1);
-	if (arr_tokens[1])
-	{
-		if (chdir(arr_tokens[1]))
-			return(-1);
-	}
-	else
-	{
-		var_val = _getenv("HOME", env);
-		if (chdir(var_val))
-			return (-1);
-	}
-	return (0);
-}
+// 	if (arr_tokens[2])
+// 		return (-1);
+// 	if (arr_tokens[1])
+// 	{
+// 		if (chdir(arr_tokens[1]))
+// 			return(-1);
+// 	}
+// 	else
+// 	{
+// 		var_val = _getenv("HOME", env);
+// 		if (chdir(var_val))
+// 			return (-1);
+// 	}
+// 	return (0);
+// }
 
 /**
  * exit_sh - Handles the exit built-in.
@@ -206,27 +206,27 @@ void exit_fail(char *msg, char *buffer, char **arr_tokens)
  *
  * Return: 0 if command is a built-in, 1 otherwise.
  */
-int check_builtins(char **arr_tokens, char *buffer, char **env)
-{
-	//loop through array of structs with each builtin function
-	if (_strcmp(arr_tokens[0], "cd") == 0)
-	{
-		if (change_dir(arr_tokens, env) == 0)
-		{
-			free(buffer);
-			free(arr_tokens);
-			return (0);
-		}
-		else
-			exit_fail("wrong number of arguments to cd\n",
-					buffer, arr_tokens);
-	}
+// int check_builtins(char **arr_tokens, char *buffer, char **env)
+// {
+// 	//loop through array of structs with each builtin function
+// 	if (_strcmp(arr_tokens[0], "cd") == 0)
+// 	{
+// 		if (change_dir(arr_tokens, env) == 0)
+// 		{
+// 			free(buffer);
+// 			free(arr_tokens);
+// 			return (0);
+// 		}
+// 		else
+// 			exit_fail("wrong number of arguments to cd\n",
+// 					buffer, arr_tokens);
+// 	}
 
-	if (_strcmp(arr_tokens[0], "exit") == 0)
-		exit_sh(arr_tokens, buffer);
+// 	if (_strcmp(arr_tokens[0], "exit") == 0)
+// 		exit_sh(arr_tokens, buffer);
 
-	return (1);
-}
+// 	return (1);
+// }
 
 /**
  * exec_cmd - Handles execution of a commands.
@@ -287,10 +287,10 @@ int main(void)
 		}
 
 		token_zero = get_tokens(buffer, &arr_tokens);
-		if (check_builtins(arr_tokens, buffer, env) == 0)
+		if (builtins(arr_tokens, env, buffer))
 			continue;
 
-		cmd_full_path = _getcmd(token_zero, env);
+		cmd_full_path = _getcmd(token_zero, arr_tokens, env);
 		if (!cmd_full_path)
 		{
 			write(2, "not found\n", 10);
