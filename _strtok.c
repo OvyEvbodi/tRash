@@ -3,13 +3,11 @@
 char *_strtok(char *str, const char *delim)
 {
 	char *token;
-	/* static since we might need to reuse them on the next func call */
 	static char *next_token = NULL, *end_of_string = NULL;
 	size_t ind, flag = NO_VALID_CHAR;
 
 	if (str)
 	{
-		/* (re)assign start and end addresses to static variables */
 		next_token = str;
 		end_of_string = str + _strlen(str);
 	}
@@ -27,7 +25,7 @@ char *_strtok(char *str, const char *delim)
 			{
 				*next_token = '\0';
 				if (next_token == token)
-					token++; /* in case delims preceed valid chars */
+					token++;
 				break;
 			}
 		}

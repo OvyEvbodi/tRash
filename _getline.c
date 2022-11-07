@@ -10,58 +10,45 @@
  * Return: the number of characters read into line_buff,
  * otherwise, -1 if the end-of-file is reached.
 */
-
-ssize_t _getline(char **line_buff, ssize_t *capacity, size_t stream)
+ssize_t _getline(char **line_buff, size_t *capacity, FILE *stream)
 {
-	ssize_t position = 0;
+	ssize_t rd, tot_read = 0, buff_len = BUFF_SIZE;
+	char *tmp_buff, c;
 
-	if ((*capacity) <= 0)
-		*capacity = BUFSIZ;
-	/*allocate mem only when needed*/
-	if (!(*line_buff))
-	{
-		//*line_buff = "here";
-		//printf("%s from get\n", *line_buff);
-		*line_buff = malloc(sizeof(char) * (*capacity));
-		//*line_buff = "memset";
-		//printf("%s from get\n", *line_buff);
-		if (!(*line_buff))
-		{
-			perror("Error allocating memory");
-			/*what should we return?*/
-			exit(EXIT_FAILURE);
-		}
-	}
+	tmp_buff = malloc(sizeof(char) * BUFF_SIZE);
+	if (!tmp_buff)
+		perror("Failed to allocate memory."), exit(EXIT_FAILURE);
 
 	do {
-		/*reallocate mem when needed*/
-		if (position == (*capacity))
+		rd = read(STDIN_FILENO, &c, 1);
+		if (rd == -1 || (rd == 0 && tot_read == 0))
 		{
-			*line_buff = _realloc(*line_buff, *capacity, (*capacity + BUFSIZ));
-			*capacity += BUFSIZ;
-			if (!line_buff)
-			{
-				perror("Error reallocating memory");
-				/*what should we return?*/
-				exit(EXIT_FAILURE);
-			}
-		}
-		
-		position = read(stream, *line_buff, *capacity);
-		if (position == -1)
-		{
-			perror("Error reading input\n");
-			exit(EXIT_FAILURE);
-		}
-		//printf("%s after read call\n", *line_buff);
-		/*how to check if EOF is reached*/
-		if (position == 0 || _strcmp(*line_buff, "exit\n") == 0)
+			*line_buff = tmp_buff;
 			return (EOF);
+		}
+		if (rd == 0)
+			break;
 
-		//I'm trying to take a different approach
-		//position = write(fd, *line_buff, position);
-	} while (position == *capacity);
+		tmp_buff[tot_read++] = c;
+		if (tot_read == buff_len)
+		{
+			tmp_buff = _realloc(tmp_buff, buff_len, buff_len + BUFF_SIZE);
+			if (!tmp_buff)
+				perror("Failed to allocate memory."), exit(EXIT_FAILURE);
+			buff_len += BUFF_SIZE;
+		}
+	} while (c != '\n');
 
-	return (position);
-	/*NOTE: caller frees line_buff*/
+	tmp_buff[tot_read] = '\0';
+	if (!*line_buff || *capacity < buff_len)
+	{
+		*capacity = buff_len;
+		*line_buff = tmp_buff;
+		return (tot_read);
+	}
+	_strcpy(*line_buff, tmp_buff);
+	free(tmp_buff);
+
+	return (tot_read);
 }
+

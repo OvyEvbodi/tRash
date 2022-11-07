@@ -40,7 +40,7 @@ int main(int ac, char **av)
 		len = 0, i = 0;
 		write(1, "tRash-->$ ", 10);
 
-		if (__getline(&buffer, &len, stdin) == -1)
+		if (_getline(&buffer, &len, stdin) == -1)
 		{
 			free(buffer);
 			write(1, "\n", 1);
