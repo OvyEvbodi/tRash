@@ -16,3 +16,15 @@ Sun Nov  6 01:53:24 2022
 Sun Nov  6 22:33:35 2022
  /*Received with love <3 */
 
+Tue Nov  8 00:51:17 2022
+ From Ovy: I altered line 291 in the main function.
+
+Tue Nov  8 00:52:53 2022
+ From Ovy: cd  should update the pwd of its current process, not the parent process, so I think we're good on that one.
+
+Tue Nov  8 00:53:52 2022
+ From Ovy: I can't seem to figure out how to check the updated environment after calling setenv
+
+Tue Nov  8 00:54:57 2022
+ From Ovy: Kindly run valgrind on the updated version of our program. 
+
