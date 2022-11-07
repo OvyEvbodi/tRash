@@ -77,7 +77,7 @@ char *_getcmd(char *cmd, char **env)
 
 	if (_strchr(cmd, '/'))
 	{
-		path = cmd;
+		path = _strdup(cmd);
 	}
 	else
 	{
