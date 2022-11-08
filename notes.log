@@ -31,3 +31,6 @@ Tue Nov  8 00:54:57 2022
 Tue Nov  8 01:01:05 2022
  From Ovy: More than 5 functions in tRash.c.
 
+Tue Nov  8 03:09:23 2022
+ From Ovy: I'm currently working on the echo variable replacements. The idea is to concatenate 3 strings, the first part being composed of the characters(if they exist) that precede the $$/$? triggers, the second being the replaced values of those triggers, and the third, the succeeding characters. I was hoping to use a counter variable to keep track of the first part so as to be able to backtrack the traversing process efficiently, but there seems to be a problem with my approach. It’s a messy code, and I only pushed it to keep you up to speed with my activities. 
+
