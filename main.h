@@ -50,6 +50,7 @@ char *_strcpy(char *, char *);
 char *_strdup(char *);
 char *str_concat(char *, char *);
 /***********************Ovy's additions 7/11/22************************/
+int _special_atoi(char *s);
 int _atoi(char *s);
 char *vars(char **arr_tokens, char **env);
 char *_strstr(char *haystack, char *needle, int *i);
