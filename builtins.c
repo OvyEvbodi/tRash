@@ -82,7 +82,11 @@ char *_setenv(char **arr_tokens, char **env, char *buffer)
 	if (setenv(arr_tokens[1], arr_tokens[2], overwrite))
 		return (NULL);
 	else
+	{
 		printf("setenv success\n");
+		free(buffer);
+		free(arr_tokens);
+	}
 	return ("ok");
 }
 
@@ -101,7 +105,11 @@ char *_putenv(char **arr_tokens, char **env, char *buffer)
 	if (putenv(arr_tokens[1]))
 		return (NULL);
 	else
+	{
 		printf("putenv success\n");
+		free(buffer);
+		free(arr_tokens);
+	}
 	return ("ok");
 }
 
