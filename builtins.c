@@ -18,9 +18,7 @@ char *_exit_th(char **arr_tokens, char **env, char *buffer)
 		status = 0;
 	else
 		status = _special_atoi(arr_tokens[1]);
-	printf("status --> %d\n", status);
 	status %= 256;
-	printf("status --> %d\n", status);
 	free(arr_tokens);
 	free(buffer);
 	exit(status);

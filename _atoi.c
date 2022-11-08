@@ -9,44 +9,30 @@
  */
 int _special_atoi(char *s)
 {
-	int i, d, n, len, f, digit;
+	int i, d, n, len, digit;
 
 	i = 0;
 	d = 0;
 	n = 0;
 	len = 0;
-	f = 0;
 	digit = 0;
 
 	while (s[len] != '\0')
 	{
 		if (s[len] < '0' || s[len] > '9')
-		{
-			//return (0);
-			printf("atoi invalid\n");
 			return (0);
-		}
 		len++;
 	}
-	printf("atoi\n");
 	if (len > 9)
-	{
-		printf("atoi too long\n");
 		return (0);
-	}
-	printf("len %d\n", len);
 	while (i < len)
 	{
-		printf("len & digit in the loop!! %d, %d\n", len, digit);
 			digit = s[i] - '0';
 			if (d % 2)
 				digit = -digit;
 			n = n * 10 + digit;
-			
 		i++;
 	}
-	
-	printf("atoi num\n");
 	return (n);
 }
 
