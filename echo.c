@@ -63,7 +63,7 @@ char *sort_echo(char ***arr_tokens, char **env)
 				if (arr_tokens[0][i][j + 1] == '$')
 				{
 					pid_len = 0;
-					pid_t pid = getpid();
+					pid_t pid = getppid();
 					char_pid_mall = conv_to_char(pid);
 					while (char_pid_mall[pid_len])
 					{
