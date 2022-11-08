@@ -38,25 +38,30 @@ char *_exit_th(char **arr_tokens, char **env, char *buffer)
 char *cd(char **arr_tokens, char **env, char *buffer)
 {
 	char *var_val;
-	(void)buffer;
 
 	if (arr_tokens[2])
 		return (NULL);
 	if (arr_tokens[1])
 	{
-		if (chdir(arr_tokens[1]))
-			return(NULL);
-		// else
-		// 	getcwd();
+		if (chdir(arr_tokens[1]) == 0)
+		{
+			free(buffer);
+ 			free(arr_tokens);
+			return("ok");
+		}
 	}
 	else
 	{
 		var_val = _getenv("HOME", env);
-		if (chdir(var_val))
-			return (NULL);
+		if (chdir(var_val) == 0)
+		{
+			free(buffer);
+ 			free(arr_tokens);
+			return ("ok");
+		}
 	}
 
-	return ("ok");
+	return (NULL);
 }
 
 /**
