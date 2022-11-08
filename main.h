@@ -11,8 +11,10 @@
 #include <sys/stat.h>
 
 #define BUFF_SIZE	1024
-#define VALID_CHAR	1
 #define NO_VALID_CHAR	0
+#define VALID_CHAR	1
+#define NO		0
+#define YES		1
 
 /**
  * struct cmd - defines a command
@@ -26,6 +28,7 @@ typedef struct command
 	char *(*op)(char **arr_tokens, char **env, char *buffer);
 } cmds;
 
+static int status;
 /*prototypes for builtin functions*/
 char *_exit_th(char **arr_tokens, char **env, char *buffer);
 char *cd(char **arr_tokens, char **env, char *buffer);
@@ -62,5 +65,9 @@ void exit_sh(char **arr_tokens, char *buffer);
 void exit_fail(char *msg, char *buffer, char **arr_tokens);
 int check_builtins(char **arr_tokens, char *buffer, char **env);
 void exec_cmd(char *buffer, char **arr_tokens, char *cmd_full_path, char **env);
+
+/************** Chee-z's additions for echo ********************/
+char *sort_echo(char ***arr_tokens, char **env);
+char *conv_to_char(size_t num);
 
 #endif /*MAIN_H*/
