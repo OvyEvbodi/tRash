@@ -42,3 +42,6 @@ Tue Nov  8 19:18:20 2022
  The number can only be positive.
  The exit status is always the number mod 256.
 
+Tue Nov  8 23:45:28 2022
+ From Ovy: I fixed the exit builtin. The cd one is still pending, I'm on it.
+
