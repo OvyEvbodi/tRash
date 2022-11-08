@@ -16,12 +16,12 @@ char *conv_to_char(size_t num)
 		return (buff);
 	}
 
-	for (i = 0; i < 10; i++)
+	for (i = 0; i < 7; i++)
 		tmp_buff[i] = '0';
 
 	while (num)
 	{
-		tmp_buff[i--] = (num % 10) + 48;
+		tmp_buff[--i] = (num % 10) + 48;
 		num /= 10;
 	}
 
