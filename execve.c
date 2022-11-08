@@ -13,7 +13,7 @@ void exec_cmd(char *buffer, char **arr_tokens, char *cmd_full_path, char **env)
 	pid_t pid = fork();
 	arr_tokens[0] = cmd_full_path;
 
-	if (strstr(cmd_full_path, "echo") == 0)
+	if (strstr(cmd_full_path, "echo"))
 		echo_arg_string = sort_echo(&arr_tokens, env);
 
 	if (pid == 0)
