@@ -88,7 +88,7 @@ char **_strtow(char *str);
 char *_strcpy(char *, char *);
 char *_strdup(char *);
 char *str_concat(char *, char *);
-char *_strstr(char *haystack, char *needle, int *i);
+char *_strstr(char *haystack, char *needle);
 int _atoi(char *s);
 
 #endif /* for MAIN_H */
