@@ -61,7 +61,8 @@ char *_getcmd(char *cmd, char **arr_tokens, char **env);
 
 /* echo */
 char *sort_echo(char ***arr_tokens, char **env);
-char *conv_to_char(size_t num);
+void handle_esc(char ***arr_tokens, char **string, size_t *str_len, size_t i,
+		size_t *j);
 char *mov_num_vals(char **string, size_t *str_len, size_t *str_size,
 		size_t type, size_t *j, size_t *doll_flag);
 char *mov_var_val(char ***arr_tokens, char **env, char **string,
@@ -89,6 +90,7 @@ char *_strcpy(char *, char *);
 char *_strdup(char *);
 char *str_concat(char *, char *);
 char *_strstr(char *haystack, char *needle);
+char *conv_to_char(size_t num);
 int _atoi(char *s);
 
 #endif /* for MAIN_H */
