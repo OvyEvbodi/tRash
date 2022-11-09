@@ -5,16 +5,17 @@
  *
  * Return: 0 on success.
  */
-int main(void)
+int main(int argc, char **argv)
 {
 	char *buffer, **arr_tokens, *token_zero, *cmd_full_path;
 	char **env = environ;
-	size_t buff_size;
+	size_t buff_size, count = 0; /* give count a global scope */
 
 	while (1)
 	{
 		buffer = NULL;
 		buff_size = 0;
+		count++;
 		write(1, "tRash-->$ ", 10);
 
 		if (_getline(&buffer, &buff_size, stdin) == -1)
@@ -32,7 +33,7 @@ int main(void)
 		cmd_full_path = _getcmd(token_zero, arr_tokens, env);
 		if (!cmd_full_path)
 		{
-			write(2, "not found\n", 10);
+			dprintf(STDERR_FILENO, "%s: %lu: not found\n", argv[0], count); /* for testing */
 			free(buffer);
 			free(arr_tokens);
 			continue;
