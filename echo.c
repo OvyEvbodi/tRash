@@ -163,7 +163,7 @@ char *handle_exp(char ***arr_tokens, char **env, char **string,
 		case '\0':
 			doll_flag++;
 			string[0][(*str_len)++] = '$';
-			j++;
+			(*j)++;
 			break;
 		default:
 			mov_var_val(arr_tokens, env, string, str_len, j, i, doll_flag);
