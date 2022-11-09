@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * conv_to_char - Converts the pid and status integers to characters.
+ * conv_to_char - Converts numbers less than 7 digits to characters.
  * @num: Integer value to convert.
  *
  * Return: Buffer containing the characters.
@@ -171,6 +171,7 @@ char *handle_exp(char ***arr_tokens, char **env, char **string,
 	return ("ok");
 }
 
+void handle_esc(char **string, size_t *str_len, size_t *j);
 /**
  * sort_echo - Arranges the arguments to exec for the echo command.
  * @arr_tokens: Pointer to array of tokens.
@@ -201,6 +202,27 @@ char *sort_echo(char ***arr_tokens, char **env)
 				if (!reval)
 					return (NULL);
 				continue;
+			}
+			if (arr_tokens[0][i][j] == '\\')
+			{
+				j++;
+				if (arr_tokens[0][i][j] == '\\')
+				{
+					switch (arr_tokens[0][i][j + 1])
+					{
+						case 'n':
+							j++;
+							string[str_len++] = '\n';
+							break;
+						case 't':
+							j++;
+							string[str_len++] = '\t';
+							break;
+						default:
+							string[str_len++] = '\\';
+					}
+					continue;
+				}
 			}
 			string[str_len++] = arr_tokens[0][i][j];
 			doll_flag++;
