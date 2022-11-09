@@ -33,6 +33,7 @@ typedef struct command
 	char *(*op)(char **arr_tokens, char **env, char *buffer);
 } cmds;
 
+extern char **environ;
 static int status;
 
 /* _getline */
