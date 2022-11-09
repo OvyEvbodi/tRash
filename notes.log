@@ -55,7 +55,7 @@ Wed Nov  9 04:44:04 2022
  From Ovy: I have created a test file "setenv_test.c" for testing the current vrsion of the setenv implementation. Here's the command for running it with alll its the dependent c files: gcc setenv_test.c builtins.c _strncmp.c _strlen.c str_concat.c _atoi.c _strdup.c -o test
 
 Wed Nov  9 04:45:48 2022
- Kindly run valgrind on builtins.c
+ From Ovy: Kindly run valgrind on builtins.c
 
 Wed Nov  9 04:47:29 2022
  From Ovy: I took a look at the variable replacement file, amazing work Chee. It's a lot to digest, so I'll go back to it later in the day, and tell you if I snotice any oversights.
