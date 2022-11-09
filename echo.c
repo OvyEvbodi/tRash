@@ -148,27 +148,25 @@ char *handle_exp(char ***arr_tokens, char **env, char **string,
 {
 	char *reval;
 
-	if (arr_tokens[0][i][*j + 1] == '$')
+	switch (arr_tokens[0][i][*j + 1])
 	{
-		reval = mov_num_vals(string, str_len, str_size, PID, j, doll_flag);
-		if (!reval)
-			return (NULL);
-	}
-	else if (arr_tokens[0][i][*j + 1] == '?')
-	{
-		reval = mov_num_vals(string, str_len, str_size, STAT, j, doll_flag);
-		if (!reval)
-			return (NULL);
-	}
-	else if (arr_tokens[0][i][*j + 1] == '\0')
-	{
-		doll_flag++;
-		string[0][(*str_len)++] = '$';
-		j++;
-	}
-	else
-	{
-		mov_var_val(arr_tokens, env, string, str_len, j, i, doll_flag);
+		case '$':
+			reval = mov_num_vals(string, str_len, str_size, PID, j, doll_flag);
+			if (!reval)
+				return (NULL);
+			break;
+		case '?':
+			reval = mov_num_vals(string, str_len, str_size, STAT, j, doll_flag);
+			if (!reval)
+				return (NULL);
+			break;
+		case '\0':
+			doll_flag++;
+			string[0][(*str_len)++] = '$';
+			j++;
+			break;
+		default:
+			mov_var_val(arr_tokens, env, string, str_len, j, i, doll_flag);
 	}
 	return ("ok");
 }
