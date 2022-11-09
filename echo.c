@@ -106,7 +106,7 @@ char *mov_num_vals(char **string, size_t *str_len, size_t *str_size,
  *
  * Return: ok if successful, NULL if error occurs.
  */
-char *get_var_val(char ***arr_tokens, char **env, char **string,
+char *mov_var_val(char ***arr_tokens, char **env, char **string,
 		size_t *str_len, size_t *j, size_t i, size_t *doll_flag)
 {
 	size_t var_ind = 0, v_val_ind = 0, tmp_j;
@@ -168,7 +168,7 @@ char *handle_exp(char ***arr_tokens, char **env, char **string,
 	}
 	else
 	{
-		get_var_val(arr_tokens, env, string, str_len, j, i, doll_flag);
+		mov_var_val(arr_tokens, env, string, str_len, j, i, doll_flag);
 	}
 	return ("ok");
 }

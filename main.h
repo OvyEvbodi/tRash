@@ -64,7 +64,7 @@ char *sort_echo(char ***arr_tokens, char **env);
 char *conv_to_char(size_t num);
 char *mov_num_vals(char **string, size_t *str_len, size_t *str_size,
 		size_t type, size_t *j, size_t *doll_flag);
-char *get_var_val(char ***arr_tokens, char **env, char **string,
+char *mov_var_val(char ***arr_tokens, char **env, char **string,
 		size_t *str_len, size_t *j, size_t i, size_t *doll_flag);
 char *handle_exp(char ***arr_tokens, char **env, char **string,
 		size_t *str_len, size_t *str_size, size_t *j, size_t i, size_t *doll_flag);
