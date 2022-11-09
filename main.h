@@ -33,7 +33,6 @@ static int status;
 char *_exit_th(char **arr_tokens, char **env, char *buffer);
 char *cd(char **arr_tokens, char **env, char *buffer);
 char *_setenv(char **arr_tokens, char **env, char *buffer);
-char *_putenv(char **arr_tokens, char **env, char *buffer);
 char *builtins(char **arr_tokens, char **env, char *buffer);
 
 /*prototypes for other functions*/
@@ -49,11 +48,13 @@ char **_strtow(char *str);
 char *_strcpy(char *, char *);
 char *_strdup(char *);
 char *str_concat(char *, char *);
-/***********************Ovy's additions 7/11/22************************/
+
 int _special_atoi(char *s);
 int _atoi(char *s);
 char *vars(char **arr_tokens, char **env);
-char *_strstr(char *haystack, char *needle, int *i);
+char *_strstr(char *haystack, char *needle, size_t *i);
+/***********************Ovy's addition for setenv************************/
+int setenviron(char *name, char *value, int overwrite);
 
 char *_getenv(char *var, char **env);
 char *full_cmd(char *cmd, char *path);

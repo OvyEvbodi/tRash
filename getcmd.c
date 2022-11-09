@@ -18,7 +18,6 @@ char *builtins(char **arr_tokens, char **env, char *buffer)
 		{"exit", _exit_th},
 		{"cd", cd},
 		{"setenv", _setenv},
-		{"putenv", _putenv},
 		{NULL, NULL}
 	};
 

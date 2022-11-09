@@ -45,3 +45,9 @@ Tue Nov  8 19:18:20 2022
 Tue Nov  8 23:45:28 2022
  From Ovy: I fixed the exit builtin. The cd one is still pending, I'm on it.
 
+Wed Nov  9 03:02:04 2022
+ From Ovy: We should take out some unused functions and their protoypes. ,. An example of such would be the check_builtins function. I can also spot the change_dir and exit_sh functions, and I think they should go as well. 
+
+Wed Nov  9 04:21:22 2022
+ From Ovy: The setenv function is up now, but I'd need to find a way to add a previously non-existent variable to the environment. The current version works just fine for cd, since we need to overwrite both the PWD and OLDPWD variables.
+
