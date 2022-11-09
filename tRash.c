@@ -9,13 +9,13 @@ int main(int argc, char **argv)
 {
 	char *buffer, **arr_tokens, *token_zero, *cmd_full_path;
 	char **env = environ;
-	size_t buff_size, count = 0; /* give count a global scope */
+	size_t buff_size, loop_count = 0;
 
 	while (1)
 	{
 		buffer = NULL;
 		buff_size = 0;
-		count++;
+		loop_count++;
 		write(1, "tRash-->$ ", 10);
 
 		if (_getline(&buffer, &buff_size, stdin) == -1)
@@ -33,7 +33,15 @@ int main(int argc, char **argv)
 		cmd_full_path = _getcmd(token_zero, arr_tokens, env);
 		if (!cmd_full_path)
 		{
-			dprintf(STDERR_FILENO, "%s: %lu: not found\n", argv[0], count); /* for testing */
+			if (_strcmp(token_zero, "cd") == 0)
+				write_to_stderr("%p: %n: cd: can't cd to %r\n", argv[0],
+						loop_count, NULL, arr_tokens[1]);
+			else if (_strcmp(token_zero, "exit") == 0)
+				write_to_stderr("%p: %n: exit: Illegal number: %r\n", argv[0],
+						loop_count, NULL, arr_tokens[1]);
+			else
+				write_to_stderr("%p: %n: %c: not found\n", argv[0],
+						loop_count, token_zero, NULL);
 			free(buffer);
 			free(arr_tokens);
 			continue;

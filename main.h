@@ -76,6 +76,8 @@ void exit_sh(char **arr_tokens, char *buffer);
 void exit_fail(char *msg, char *buffer, char **arr_tokens);
 
 /* utilities */
+int write_to_stderr(char *format, char *arg_zero, size_t loop_count,
+		char *tok_zero, char *tok_one);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 int _strcmp(char *s1, char *s2);
 int _strncmp(char *, char *, size_t);

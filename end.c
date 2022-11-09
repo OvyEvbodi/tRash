@@ -17,7 +17,7 @@ void eof(char *buffer)
  */
 void error_exit(char *msg)
 {
-	write(2, msg, _strlen(msg));
+	write_to_stderr(msg, NULL, 0, NULL, NULL);
 	exit(EXIT_FAILURE);
 }
 
@@ -41,7 +41,7 @@ void exit_sh(char **arr_tokens, char *buffer)
  */
 void exit_fail(char *msg, char *buffer, char **arr_tokens)
 {
-	write(2, msg, _strlen(msg));
+	write_to_stderr(msg, NULL, 0, arr_tokens[0], arr_tokens[1]);
 	free(buffer);
 	free(arr_tokens);
 	exit(EXIT_FAILURE);

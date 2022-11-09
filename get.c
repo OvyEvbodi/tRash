@@ -103,18 +103,16 @@ char *get_tokens(char *buffer, char ***arr_tokens)
 	if (!*arr_tokens)
 	{
 		free(buffer);
-		error_exit("could not tokenize\n");
+		error_exit("error: could not tokenize\n");
 	}
 
 	token = _strtok(buffer, delim_str);
-//	token = _strdup(token);
 	arr_tokens[0][i++] = token;
 	token_zero = token;
 
 	while (token)
 	{
 		token = _strtok(NULL, delim_str);
-//		token = _strdup(token);
 		arr_tokens[0][i++] = token;
 	}
 	arr_tokens[0][i] = NULL;
