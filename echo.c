@@ -43,7 +43,7 @@ char *conv_to_char(size_t num)
 char *sort_echo(char ***arr_tokens, char **env)
 {
 	size_t i, j, pid_len, str_len = 0, str_size = BUFF_SIZE, started = NO;
-	size_t status_val, stat_len, tmp_j, v_val_ind, var_ind;
+	size_t status_val, stat_len, tmp_j, v_val_ind, var_ind, doll_flag = 0;
 	char *char_pid_mall, char_pid[8], *char_stat_mall, char_stat[8];
 	char *var_val, var[BUFF_SIZE];
 	char *string = malloc(sizeof(char) * BUFF_SIZE);
@@ -53,7 +53,7 @@ char *sort_echo(char ***arr_tokens, char **env)
 
 	for (i = 1; arr_tokens[0][i]; i++)
 	{
-		if (started)
+		if (started && doll_flag)
 			string[str_len++] = ' ';
 		started = YES;
 		for (j = 0; arr_tokens[0][i][j]; j++)
@@ -81,6 +81,7 @@ char *sort_echo(char ***arr_tokens, char **env)
 								return (NULL);
 							str_size += BUFF_SIZE;
 						}
+						doll_flag++;
 						string[str_len++] = char_pid[pid_len];
 					}
 					j++;
@@ -107,6 +108,7 @@ char *sort_echo(char ***arr_tokens, char **env)
 								return (NULL);
 							str_size += BUFF_SIZE;
 						}
+						doll_flag++;
 						string[str_len++] = char_stat[stat_len];
 					}
 					j++;
@@ -114,6 +116,7 @@ char *sort_echo(char ***arr_tokens, char **env)
 				}
 				else if (arr_tokens[0][i][j + 1] == '\0')
 				{
+					doll_flag++;
 					string[str_len++] = '$';
 					j++;
 					continue;
@@ -123,8 +126,10 @@ char *sort_echo(char ***arr_tokens, char **env)
 					var_ind = 0;
 					v_val_ind = 0;
 					for (tmp_j = j + 1;
-						(arr_tokens[0][i][tmp_j] >= 'a' && arr_tokens[0][i][tmp_j] <= 'z')
-							|| (arr_tokens[0][i][tmp_j] >= 'A' && arr_tokens[0][i][tmp_j] <= 'Z');
+						(arr_tokens[0][i][tmp_j] >= 'a' && arr_tokens[0][i][tmp_j] <= 'z') ||
+						(arr_tokens[0][i][tmp_j] >= 'A' && arr_tokens[0][i][tmp_j] <= 'Z') ||
+						(arr_tokens[0][i][tmp_j] >= '0' && arr_tokens[0][i][tmp_j] <= '9') ||
+						(arr_tokens[0][i][tmp_j] == '_');
 						tmp_j++)
 					{
 						var[var_ind++] = arr_tokens[0][i][tmp_j];
@@ -133,7 +138,7 @@ char *sort_echo(char ***arr_tokens, char **env)
 					var_val = _getenv(var, env);
 					if (var_val)
 						while (var_val[v_val_ind])
-							string[str_len++] = var_val[v_val_ind++];
+							string[str_len++] = var_val[v_val_ind++], doll_flag++;
 					j = tmp_j - 1;
 					continue;
 				}
@@ -141,6 +146,8 @@ char *sort_echo(char ***arr_tokens, char **env)
 			string[str_len++] = arr_tokens[0][i][j];
 		}
 	}
+//	if (doll_flag == 1 && str_len == 0)
+//		string[str_len++] = '\n';
 	string[str_len] = '\0';
 	arr_tokens[0][1] = string;
 	arr_tokens[0][2] = NULL;
