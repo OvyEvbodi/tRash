@@ -92,51 +92,44 @@ char *_env(char **arr_tokens, env_node *env_head, char *buffer)
 }
 
 /**
- * _setenv - sets an environment variable
- * @arr_tokens: the array to check for a builtin command
- * @env_head: head pointer to the linked list of environment variables
- * @buffer: the temporay buffer holding input data
+ * _setenv - Sets an environment variable
+ * @arr_tokens: The array to check for a builtin command
+ * @env_head: Head pointer to the linked list of environment variables
+ * @buffer: The temporay buffer holding input data
  *
  * Return: ok on success,
  * otherwise, NULL
 */
-
 char *_setenv(char **arr_tokens, env_node *env_head, char *buffer)
 {
-	int overwrite;
+	if (arr_tokens[3])
+		write_to_stderr("%c: invalid number of arguments\n", NULL, 0, arr_tokens[0], NULL);
 
-	overwrite = _atoi(arr_tokens[3]);
-	if (setenv(arr_tokens[1], arr_tokens[2], overwrite))
-		return (NULL);
-	else
-	{
-		printf("setenv success\n");
-		free(buffer);
-		free(arr_tokens);
-	}
+	if (!replace_env_node(env_head, arr_tokens[1], arr_tokens[2]))
+		write_to_stderr("%c: failed to set variable\n", NULL, 0, arr_tokens[0], NULL);
+	free(buffer);
+	free(arr_tokens);
 	return ("ok");
 }
 
 /**
- * _putenv - sets an environment variable
- * @arr_tokens: the array to check for a builtin command
- * @env_head: a pointer to the environment variables
- * @buffer: the temporay buffer holding input data
+ * _unsetenv - Removes an environment variable.
+ * @arr_tokens: The array to check for a builtin command.
+ * @env_head: A pointer to the environment variables.
+ * @buffer: The temporay buffer holding input data.
  *
  * Return: ok on success,
  * otherwise, NULL
 */
-
-char *_putenv(char **arr_tokens, env_node *env_head, char *buffer)
+char *_unsetenv(char **arr_tokens, env_node *env_head, char *buffer)
 {
-	if (putenv(arr_tokens[1]))
-		return (NULL);
-	else
-	{
-		printf("putenv success\n");
-		free(buffer);
-		free(arr_tokens);
-	}
+	if (arr_tokens[2])
+		write_to_stderr("%c: invalid number of arguments\n", NULL, 0, arr_tokens[0], NULL);
+
+	if (!delete_env_node(env_head, arr_tokens[1]))
+		write_to_stderr("%c: failed to unset variable\n", NULL, 0, arr_tokens[0], NULL);
+	free(buffer);
+	free(arr_tokens);
 	return ("ok");
 }
 

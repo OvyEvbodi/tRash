@@ -36,7 +36,7 @@ env_node *create_env_list(env_node **head, char *name, char *value);
 env_node *create_env_node(char *name, char *value);
 env_node *add_to_existing(env_node **head, char *name, char *value);
 env_node *replace_env_node(env_node *node, char *name, char *value);
-void delete_env_node(env_node *node, char *name);
+char *delete_env_node(env_node *node, char *name);
 void free_env_list(env_node *head);
 /***************************/
 
@@ -65,7 +65,7 @@ char *_strtok(char *str, const char *delim);
 char *_exit_th(char **arr_tokens, env_node *env_head, char *buffer);
 char *cd(char **arr_tokens, env_node *env_head, char *buffer);
 char *_setenv(char **arr_tokens, env_node *env_head, char *buffer);
-char *_putenv(char **arr_tokens, env_node *env_head, char *buffer);
+char *_unsetenv(char **arr_tokens, env_node *env_head, char *buffer);
 char *builtins(char **arr_tokens, env_node *env_head, char *buffer);
 char *_env(char **arr_tokens, env_node *env_head, char *buffer);
 

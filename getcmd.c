@@ -19,7 +19,7 @@ char *builtins(char **arr_tokens, env_node *env_head, char *buffer)
 		{"cd", cd},
 		{"env", _env},
 		{"setenv", _setenv},
-		{"putenv", _putenv},
+		{"unsetenv", _unsetenv},
 		{NULL, NULL}
 	};
 

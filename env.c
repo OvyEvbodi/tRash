@@ -102,9 +102,12 @@ env_node *replace_env_node(env_node *head, char *name, char *value)
  * @head: Head pointer.
  * @name: Name of variable to delete.
  */
-void delete_env_node(env_node *head, char *name)
+char *delete_env_node(env_node *head, char *name)
 {
 	env_node *tmp = head, *tmp2;
+
+	if (!tmp)
+		return (NULL);
 
 	if (_strcmp(tmp->name, name) == 0)
 	{
@@ -113,32 +116,36 @@ void delete_env_node(env_node *head, char *name)
 		tmp2 = tmp->next;
 		free(tmp);
 		tmp = tmp2;
-		return;
+		return ("ok");
 	}
 
 	while (tmp)
 	{
-		if (_strcmp(tmp->next->name, name) == 0)
+		if (tmp->next)
 		{
-			if (tmp->next->next == NULL)
+			if (_strcmp(tmp->next->name, name) == 0)
 			{
-				free(tmp->next->name);
-				free(tmp->next->value);
-				free(tmp->next);
-				tmp->next = NULL;
-				break;
-			}
-			else
-			{
-				tmp2 = tmp->next->next;
-				free(tmp->next->name);
-				free(tmp->next->value);
-				free(tmp->next);
-				tmp->next = tmp2;
-				break;
+				if (tmp->next->next == NULL)
+				{
+					free(tmp->next->name);
+					free(tmp->next->value);
+					free(tmp->next);
+					tmp->next = NULL;
+					return ("ok");
+				}
+				else
+				{
+					tmp2 = tmp->next->next;
+					free(tmp->next->name);
+					free(tmp->next->value);
+					free(tmp->next);
+					tmp->next = tmp2;
+					return ("ok");
+				}
 			}
 		}
 		tmp = tmp->next;
 	}
+	return (NULL);
 }
 
