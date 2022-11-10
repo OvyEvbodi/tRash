@@ -98,8 +98,9 @@ char *_getcmd(char *cmd, char **arr_tokens, char **env)
 char *get_tokens(char *buffer, char ***arr_tokens)
 {
 	char *token_zero = NULL, *token = NULL, *delim_str = " \t\n\r\a", i = 0;
+	size_t buff_size = 64;
 
-	*arr_tokens = malloc(sizeof(char *) * 64);
+	*arr_tokens = malloc(sizeof(char *) * buff_size);
 	if (!*arr_tokens)
 	{
 		free(buffer);
@@ -112,6 +113,16 @@ char *get_tokens(char *buffer, char ***arr_tokens)
 
 	while (token)
 	{
+		if (i == buff_size)
+		{
+			*arr_tokens = _realloc(*arr_tokens, buff_size, buff_size + 64);
+			if (!*arr_tokens)
+			{
+				free(buffer);
+				error_exit("error: could not tokenize\n");
+			}
+			buff_size += 64;
+		}
 		token = _strtok(NULL, delim_str);
 		arr_tokens[0][i++] = token;
 	}
