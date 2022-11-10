@@ -51,3 +51,6 @@ Thu Nov 10 08:43:29 2022
 Thu Nov 10 08:44:21 2022
  From chee: chee, find way to take out the full path of commands before they can display their error message.
 
+Thu Nov 10 09:16:13 2022
+ From chee: The current version of echo now supports all the relevant escape characters. It also acts exactly like the echo in sh. 
+
