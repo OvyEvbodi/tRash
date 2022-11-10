@@ -33,6 +33,24 @@ typedef struct command
 	char *(*op)(char **arr_tokens, char **env, char *buffer);
 } cmds;
 
+/**** for env ****/
+typedef struct env
+{
+	char *name;
+	char *equals;
+	char *value;
+	struct env *next;
+} env_node;
+
+env_node *env_list(char **env);
+env_node *create_env_list(env_node **head, char *name, char *value);
+env_node *create_env_node(char *name, char *value);
+env_node *add_to_existing(env_node **head, char *name, char *value);
+env_node *replace_env_node(env_node *node, char *name, char *value);
+void delete_env_node(env_node *node, char *name);
+void free_env_list(env_node *head);
+/***************************/
+
 extern char **environ;
 static int status;
 

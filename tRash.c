@@ -10,6 +10,7 @@ int main(int argc, char **argv)
 	char *buffer, **arr_tokens, *token_zero, *cmd_full_path;
 	char **env = environ;
 	size_t buff_size, loop_count = 0;
+	env_node *env_head = env_list(env);
 
 	while (1)
 	{
@@ -19,10 +20,10 @@ int main(int argc, char **argv)
 		write(1, "tRash-->$ ", 10);
 
 		if (_getline(&buffer, &buff_size, stdin) == -1)
-			eof(buffer);
+			free_env_list(env_head), eof(buffer);
 		if (buffer[0] == '\n')
 		{
-			free(buffer);
+			free_env_list(env_head), free(buffer);
 			continue;
 		}
 
@@ -44,6 +45,7 @@ int main(int argc, char **argv)
 						loop_count, token_zero, NULL);
 			free(buffer);
 			free(arr_tokens);
+			free_env_list(env_head);
 			continue;
 		}
 
