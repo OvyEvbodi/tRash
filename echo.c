@@ -51,7 +51,7 @@ char *mov_num_vals(char **string, size_t *str_len, size_t *str_size,
 /**
  * mov_var_val - Moves the values of variables to the growing string.
  * @arr_tokens: Pointer to the array of tokens.
- * @env: Array of environment variables.
+ * @env_head: Head pointer to linked list of environment variables.
  * @string: Pointer to growing string.
  * @str_len: Pointer to the string length count.
  * @j: Pointer to the index in a token in an array.
@@ -60,7 +60,7 @@ char *mov_num_vals(char **string, size_t *str_len, size_t *str_size,
  *
  * Return: ok if successful, NULL if error occurs.
  */
-char *mov_var_val(char ***arr_tokens, char **env, char **string,
+char *mov_var_val(char ***arr_tokens, env_node *env_head, char **string,
 		size_t *str_len, size_t *j, size_t i, size_t *doll_flag)
 {
 	size_t var_ind = 0, v_val_ind = 0, tmp_j;
@@ -76,7 +76,7 @@ char *mov_var_val(char ***arr_tokens, char **env, char **string,
 		var[var_ind++] = arr_tokens[0][i][tmp_j];
 	}
 	var[var_ind] = '\0';
-	var_val = _getenv(var, env);
+	var_val = _getenv(var, env_head);
 	if (var_val)
 		while (var_val[v_val_ind])
 			string[0][(*str_len)++] = var_val[v_val_ind++], (*doll_flag)++;
@@ -87,7 +87,7 @@ char *mov_var_val(char ***arr_tokens, char **env, char **string,
 /**
  * handle_exp - Finds out where to get the value for an expansion.
  * @arr_tokens: Pointer to array of tokens.
- * @env: Array of environment variables.
+ * @env_head: Head pointer to linked list of environment variables.
  * @string: Pointer to growing string.
  * @str_len: Pointer to length of growing string.
  * @str_size: Pointer to size of string.
@@ -97,7 +97,7 @@ char *mov_var_val(char ***arr_tokens, char **env, char **string,
  *
  * Return: ok if successful, NULL if error occurs.
  */
-char *handle_exp(char ***arr_tokens, char **env, char **string,
+char *handle_exp(char ***arr_tokens, env_node *env_head, char **string,
 		size_t *str_len, size_t *str_size, size_t *j, size_t i, size_t *doll_flag)
 {
 	char *reval;
@@ -120,7 +120,7 @@ char *handle_exp(char ***arr_tokens, char **env, char **string,
 			(*j)++;
 			break;
 		default:
-			mov_var_val(arr_tokens, env, string, str_len, j, i, doll_flag);
+			mov_var_val(arr_tokens, env_head, string, str_len, j, i, doll_flag);
 	}
 	return ("ok");
 }
@@ -174,11 +174,11 @@ void handle_esc(char ***arr_tokens, char **string, size_t *str_len, size_t i,
 /**
  * sort_echo - Arranges the arguments to exec for the echo command.
  * @arr_tokens: Pointer to array of tokens.
- * @env: Array of environment variables.
+ * @env_head: Head pointer to linked list of environment variables.
  *
  * Return: ok if successful, NULL otherwise.
  */
-char *sort_echo(char ***arr_tokens, char **env)
+char *sort_echo(char ***arr_tokens, env_node *env_head)
 {
 	size_t i, j, str_len = 0, str_size = BUFF_SIZE, started = NO;
 	size_t doll_flag = 0;
@@ -196,7 +196,7 @@ char *sort_echo(char ***arr_tokens, char **env)
 		{
 			if (arr_tokens[0][i][j] == '$')
 			{
-				reval = handle_exp(arr_tokens, env, &string,
+				reval = handle_exp(arr_tokens, env_head, &string,
 						&str_len, &str_size, &j, i, &doll_flag);
 				if (!reval)
 					return (NULL);

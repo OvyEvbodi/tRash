@@ -20,18 +20,18 @@ int main(int argc, char **argv)
 		write(1, "tRash-->$ ", 10);
 
 		if (_getline(&buffer, &buff_size, stdin) == -1)
-			free_env_list(env_head), eof(buffer);
+			eof(buffer, env_head);
 		if (buffer[0] == '\n')
 		{
-			free_env_list(env_head), free(buffer);
+			free(buffer);
 			continue;
 		}
 
-		token_zero = get_tokens(buffer, &arr_tokens);
-		if (builtins(arr_tokens, env, buffer))
+		token_zero = get_tokens(buffer, &arr_tokens, env_head);
+		if (builtins(arr_tokens, env_head, buffer))
 			continue;
 
-		cmd_full_path = _getcmd(token_zero, arr_tokens, env);
+		cmd_full_path = _getcmd(token_zero, arr_tokens, env_head);
 		if (!cmd_full_path)
 		{
 			if (_strcmp(token_zero, "cd") == 0)
@@ -45,11 +45,10 @@ int main(int argc, char **argv)
 						loop_count, token_zero, NULL);
 			free(buffer);
 			free(arr_tokens);
-			free_env_list(env_head);
 			continue;
 		}
 
-		exec_cmd(buffer, arr_tokens, cmd_full_path, env);
+		exec_cmd(buffer, arr_tokens, cmd_full_path, env_head);
 	}
 	return (0);
 }

@@ -21,17 +21,6 @@
 #define STAT		2
 /***************************/
 
-/**
- * struct command - defines a command
- * @name: the name of the command
- * @op: the function pointer to the operation to be performed
-*/
-
-typedef struct command
-{
-	char *name;
-	char *(*op)(char **arr_tokens, char **env, char *buffer);
-} cmds;
 
 /**** for env ****/
 typedef struct env
@@ -51,6 +40,18 @@ void delete_env_node(env_node *node, char *name);
 void free_env_list(env_node *head);
 /***************************/
 
+/**
+ * struct command - defines a command
+ * @name: the name of the command
+ * @op: the function pointer to the operation to be performed
+*/
+
+typedef struct command
+{
+	char *name;
+	char *(*op)(char **arr_tokens, env_node *env_head, char *buffer);
+} cmds;
+
 extern char **environ;
 static int status;
 
@@ -61,38 +62,39 @@ ssize_t _getline(char **line_buff, size_t *capacity, FILE *stream);
 char *_strtok(char *str, const char *delim);
 
 /*prototypes for builtin functions*/
-char *_exit_th(char **arr_tokens, char **env, char *buffer);
-char *cd(char **arr_tokens, char **env, char *buffer);
-char *_setenv(char **arr_tokens, char **env, char *buffer);
-char *_putenv(char **arr_tokens, char **env, char *buffer);
-char *builtins(char **arr_tokens, char **env, char *buffer);
+char *_exit_th(char **arr_tokens, env_node *env_head, char *buffer);
+char *cd(char **arr_tokens, env_node *env_head, char *buffer);
+char *_setenv(char **arr_tokens, env_node *env_head, char *buffer);
+char *_putenv(char **arr_tokens, env_node *env_head, char *buffer);
+char *builtins(char **arr_tokens, env_node *env_head, char *buffer);
+char *_env(char **arr_tokens, env_node *env_head, char *buffer);
 
 /* execve */
 void exec_cmd(char *buffer, char **arr_tokens, char *cmd_full_path,
-		char **env);
+		env_node *env_head);
 
 /* get */
-char *get_tokens(char *buffer, char ***arr_tokens);
-char *_getenv(char *var, char **env);
+char *get_tokens(char *buffer, char ***arr_tokens, env_node *head);
+char *_getenv(char *var, env_node *env_head);
 char *full_cmd(char *cmd, char *path);
-char *_getcmd(char *cmd, char **arr_tokens, char **env);
+char *_getcmd(char *cmd, char **arr_tokens, env_node *env_head);
 
 /* echo */
-char *sort_echo(char ***arr_tokens, char **env);
+char *sort_echo(char ***arr_tokens, env_node *env_head);
 void handle_esc(char ***arr_tokens, char **string, size_t *str_len, size_t i,
 		size_t *j);
 char *mov_num_vals(char **string, size_t *str_len, size_t *str_size,
 		size_t type, size_t *j, size_t *doll_flag);
-char *mov_var_val(char ***arr_tokens, char **env, char **string,
+char *mov_var_val(char ***arr_tokens, env_node *env_head, char **string,
 		size_t *str_len, size_t *j, size_t i, size_t *doll_flag);
-char *handle_exp(char ***arr_tokens, char **env, char **string,
+char *handle_exp(char ***arr_tokens, env_node *env_head, char **string,
 		size_t *str_len, size_t *str_size, size_t *j, size_t i, size_t *doll_flag);
 
 /* end */
-void eof(char *buffer);
-void error_exit(char *msg);
-void exit_sh(char **arr_tokens, char *buffer);
-void exit_fail(char *msg, char *buffer, char **arr_tokens);
+void eof(char *buffer, env_node *env_head);
+void error_exit(char *msg, env_node *env_head);
+void exit_sh(char **arr_tokens, char *buffer, env_node *env_head);
+void exit_fail(char *msg, char *buffer, char **arr_tokens, env_node *env_head);
 
 /* utilities */
 int write_to_stderr(char *format, char *arg_zero, size_t loop_count,

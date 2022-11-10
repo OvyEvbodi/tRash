@@ -3,23 +3,23 @@
 /**
  * _getenv - Gets the value of an evironment variable if it exists.
  * @var: Environment variable to search for.
- * @env: List of environment variables.
+ * @env_head: Head pointer to list of environment variables.
  *
  * Return: The value of the environment variable, or NULL if not present.
 */
-char *_getenv(char *var, char **env)
+char *_getenv(char *var, env_node *env_head)
 {
 	char *var_val = NULL;
 	size_t var_len = _strlen(var);
 
-	while (*env)
+	while (env_head)
 	{
-		if (_strncmp(*env, var, var_len) == 0)
+		if (_strncmp(env_head->name, var, var_len) == 0)
 		{
-			var_val = *env + var_len + 1;
+			var_val = env_head->value;
 			break;
 		}
-		env++;
+		env_head = env_head->next;
 	}
 
 	return (var_val);
@@ -63,13 +63,13 @@ char *full_cmd(char *cmd, char *path)
 }
 
 /**
- * _get_cmd - Takes care of the format for running a command.
+ * _getcmd - Takes care of the format for running a command.
  * @cmd: Command.
- * @env: List of environment variables.
+ * @env_head: Head pointer to list of environment variables.
  *
  * Return: Format in which command can be run, or NULL if it fails.
  */
-char *_getcmd(char *cmd, char **arr_tokens, char **env)
+char *_getcmd(char *cmd, char **arr_tokens, env_node *env_head)
 {
 	char *path, *var_val;
 
@@ -79,7 +79,7 @@ char *_getcmd(char *cmd, char **arr_tokens, char **env)
 	}
 	else
 	{
-		var_val = _getenv("PATH", env);
+		var_val = _getenv("PATH", env_head);
 		if (var_val == NULL)
 			return (NULL);
 		path = full_cmd(cmd, var_val);
@@ -92,10 +92,11 @@ char *_getcmd(char *cmd, char **arr_tokens, char **env)
  * get_tokens - Tokenizes commandline and seperates it into command and args.
  * @buffer: malloc'ed buffer used to read commandline.
  * @arr_tokens: Array of tokens.
+ * @env_head: Head pointer to the linked list of environment variables.
  *
  * Return: Pointer to first token, or NULL if failed.
  */
-char *get_tokens(char *buffer, char ***arr_tokens)
+char *get_tokens(char *buffer, char ***arr_tokens, env_node *env_head)
 {
 	char *token_zero = NULL, *token = NULL, *delim_str = " \t\n\r\a", i = 0;
 	size_t buff_size = 70;
@@ -104,7 +105,7 @@ char *get_tokens(char *buffer, char ***arr_tokens)
 	if (!*arr_tokens)
 	{
 		free(buffer);
-		error_exit("error: could not tokenize\n");
+		error_exit("error: could not tokenize\n", env_head);
 	}
 
 	token = _strtok(buffer, delim_str);
@@ -120,7 +121,7 @@ char *get_tokens(char *buffer, char ***arr_tokens)
 			if (!*arr_tokens)
 			{
 				free(buffer);
-				error_exit("error: could not tokenize\n");
+				error_exit("error: could not tokenize\n", env_head);
 			}
 			buff_size += 70;
 		}
