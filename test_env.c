@@ -1,3 +1,7 @@
+/* 
+ * compile with:
+ * gcc test_env.c env.c _strdup.c _strlen.c _strcmp.c -o test_env
+ */
 #include "main.h"
 
 extern char **environ;

@@ -60,3 +60,6 @@ Thu Nov 10 17:02:20 2022
 Thu Nov 10 17:05:56 2022
  From Chee: to superstar, I have added the env built-in which will print from our linked list instead of the executable.
 
+Thu Nov 10 17:30:18 2022
+ From chee: to super, if you get around to working on set and unset env, there's a test_env.c you can use to see how the function you can use work.
+
