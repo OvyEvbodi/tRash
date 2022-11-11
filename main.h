@@ -116,5 +116,8 @@ char *str_concat(char *, char *);
 char *_strstr(char *haystack, char *needle);
 char *conv_to_char(size_t num);
 int _atoi(char *s);
+int exit_atoi(char *s);
+void update_var_for_cd(env_node *head, char **arr_tokens, char *buffer,
+		char *pwd, char *oldpwd);
 
 #endif /* for MAIN_H */

@@ -1,23 +1,25 @@
 #include "main.h"
 
 /**
- * exit - exits a process
+ * _exit_th - exits a process
  * @arr_tokens: the array to check for a builtin command
  * @env_head: Head pointer to the linked list of environment variables
- * @buffer: the temporay buffer holding input data
+ * @buffer: the temporary buffer holding input data
  *
  * Return: void on success,
  * otherwise, NULL
 */
-
 char *_exit_th(char **arr_tokens, env_node *env_head, char *buffer)
 {
-	int status;
+	int status = 0;
 
-	if (!arr_tokens[1])
-		status = 0;
-	else
-		status = _atoi(arr_tokens[1]);
+	if (arr_tokens[1])
+	{
+		status = exit_atoi(arr_tokens[1]);
+		if (status == -1)
+			return (NULL);
+	}
+	status %= 256;
 	free_env_list(env_head);
 	free(arr_tokens);
 	free(buffer);
@@ -30,38 +32,47 @@ char *_exit_th(char **arr_tokens, env_node *env_head, char *buffer)
  * cd - Changes the present working directory
  * @arr_tokens: The array to check for a builtin command
  * @env_head: Head pointer to list of the environment variables
- * @buffer: The temporay buffer holding input data
+ * @buffer: The temporary buffer holding input data
  *
  * Return: ok, if successful,
  * otherwise, NULL
 */
-
 char *cd(char **arr_tokens, env_node *env_head, char *buffer)
 {
-	char *var_val;
+	char *pwd, *oldpwd = getcwd(NULL, 0);
 
 	if (arr_tokens[2])
 		return (NULL);
+
 	if (arr_tokens[1])
 	{
-		if (chdir(arr_tokens[1]) == 0)
+		if (_strcmp(arr_tokens[1], "-") == 0)
 		{
-			free(buffer);
-			free(arr_tokens);
+			pwd = _getenv("OLDPWD", env_head);
+			if (chdir(pwd) == 0)
+			{
+				write(1, pwd, _strlen(pwd));
+				write(1, "\n", 1);
+				update_var_for_cd(env_head, arr_tokens, buffer, pwd, oldpwd);
+				return ("ok");
+			}
+		}
+		else if (chdir(arr_tokens[1]) == 0)
+		{
+			update_var_for_cd(env_head, arr_tokens, buffer, arr_tokens[1], oldpwd);
 			return("ok");
 		}
 	}
 	else
 	{
-		var_val = _getenv("HOME", env_head);
-		if (chdir(var_val) == 0)
+		pwd = _getenv("HOME", env_head);
+		if (chdir(pwd) == 0)
 		{
-			free(buffer);
-			free(arr_tokens);
+			update_var_for_cd(env_head, arr_tokens, buffer, pwd, oldpwd);
 			return ("ok");
 		}
 	}
-
+	free(oldpwd);
 	return (NULL);
 }
 
@@ -95,7 +106,7 @@ char *_env(char **arr_tokens, env_node *env_head, char *buffer)
  * _setenv - Sets an environment variable
  * @arr_tokens: The array to check for a builtin command
  * @env_head: Head pointer to the linked list of environment variables
- * @buffer: The temporay buffer holding input data
+ * @buffer: The temporary buffer holding input data
  *
  * Return: ok on success,
  * otherwise, NULL
@@ -116,7 +127,7 @@ char *_setenv(char **arr_tokens, env_node *env_head, char *buffer)
  * _unsetenv - Removes an environment variable.
  * @arr_tokens: The array to check for a builtin command.
  * @env_head: A pointer to the environment variables.
- * @buffer: The temporay buffer holding input data.
+ * @buffer: The temporary buffer holding input data.
  *
  * Return: ok on success,
  * otherwise, NULL

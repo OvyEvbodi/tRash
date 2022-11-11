@@ -19,7 +19,7 @@ char *mov_num_vals(char **string, size_t *str_len, size_t *str_size,
 	pid_t num;
 
 	if (type == PID)
-		num = getppid();
+		num = getpid();
 	else if (type == STAT)
 		num = WIFEXITED(status);
 
