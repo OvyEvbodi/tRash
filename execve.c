@@ -82,9 +82,10 @@ void exec_cmd(char *buffer, char **arr_tokens, char *cmd_full_path,
 {
 	char *reval = NULL, *echo_arg_string = NULL, **_env = NULL;
 	arr_tokens[0] = cmd_full_path;
+	static int status;
 
 	if (_strstr(cmd_full_path, "echo"))
-		echo_arg_string = sort_echo(&arr_tokens, env_head);
+		echo_arg_string = sort_echo(&arr_tokens, env_head, status);
 
 	_env = arrange_environ(_env, env_head);
 	pid_t pid = fork();

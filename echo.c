@@ -8,20 +8,28 @@
  * @type: Says whether to get pid (for $) or get status (for ?).
  * @j: Pointer to the index in token.
  * @doll_flag: Helps to know when to start space seperating in string.
+ * @status: Exit status of last process.
  *
  * Return: Returns ok on success, NULL on error.
  */
 char *mov_num_vals(char **string, size_t *str_len, size_t *str_size,
-		size_t type, size_t *j, size_t *doll_flag)
+		size_t type, size_t *j, size_t *doll_flag, int status)
 {
 	char *char_tmp_malloc, char_tmp[8];
 	size_t num_len = 0;
 	pid_t num;
 
 	if (type == PID)
+	{
 		num = getpid();
+	}
 	else if (type == STAT)
-		num = WIFEXITED(status);
+	{
+		if (WIFEXITED(status))
+			num = WEXITSTATUS(status);
+		else
+			num = 1;
+	}
 
 	char_tmp_malloc = conv_to_char(num);
 	while (char_tmp_malloc[num_len])
@@ -94,23 +102,24 @@ char *mov_var_val(char ***arr_tokens, env_node *env_head, char **string,
  * @j: Pointer to current index in token in the array.
  * @i: Index of token in array.
  * @doll_flag: Helps to know when to start appending space in string.
+ * @stat: Exit status of last process.
  *
  * Return: ok if successful, NULL if error occurs.
  */
 char *handle_exp(char ***arr_tokens, env_node *env_head, char **string,
-		size_t *str_len, size_t *str_size, size_t *j, size_t i, size_t *doll_flag)
+		size_t *str_len, size_t *str_size, size_t *j, size_t i, size_t *doll_flag, int stat)
 {
 	char *reval;
 
 	switch (arr_tokens[0][i][*j + 1])
 	{
 		case '$':
-			reval = mov_num_vals(string, str_len, str_size, PID, j, doll_flag);
+			reval = mov_num_vals(string, str_len, str_size, PID, j, doll_flag, stat);
 			if (!reval)
 				return (NULL);
 			break;
 		case '?':
-			reval = mov_num_vals(string, str_len, str_size, STAT, j, doll_flag);
+			reval = mov_num_vals(string, str_len, str_size, STAT, j, doll_flag, stat);
 			if (!reval)
 				return (NULL);
 			break;
@@ -175,10 +184,11 @@ void handle_esc(char ***arr_tokens, char **string, size_t *str_len, size_t i,
  * sort_echo - Arranges the arguments to exec for the echo command.
  * @arr_tokens: Pointer to array of tokens.
  * @env_head: Head pointer to linked list of environment variables.
+ * @stat: Exit status of last process.
  *
  * Return: ok if successful, NULL otherwise.
  */
-char *sort_echo(char ***arr_tokens, env_node *env_head)
+char *sort_echo(char ***arr_tokens, env_node *env_head, int stat)
 {
 	size_t i, j, str_len = 0, str_size = BUFF_SIZE, started = NO;
 	size_t doll_flag = 0;
@@ -197,7 +207,7 @@ char *sort_echo(char ***arr_tokens, env_node *env_head)
 			if (arr_tokens[0][i][j] == '$')
 			{
 				reval = handle_exp(arr_tokens, env_head, &string,
-						&str_len, &str_size, &j, i, &doll_flag);
+						&str_len, &str_size, &j, i, &doll_flag, stat);
 				if (!reval)
 					return (NULL);
 				continue;
