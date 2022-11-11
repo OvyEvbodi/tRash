@@ -66,3 +66,9 @@ Thu Nov 10 17:30:18 2022
 Thu Nov 10 21:22:49 2022
  From chee: to super, I have worked on setenv and unsetenv, ignore previous note.
 
+Fri Nov 11 14:02:07 2022
+ From Chee: To super, I have written and incorporated the functions that create an array from the current version of our list and passes to execve.
+
+Fri Nov 11 14:03:26 2022
+ From Chee: To super, I have fixed previously discussed issues with exit and cd, and have modified them to use the linked list of env variables. 
+
