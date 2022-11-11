@@ -72,6 +72,10 @@ char *_env(char **arr_tokens, env_node *env_head, char *buffer);
 /* execve */
 void exec_cmd(char *buffer, char **arr_tokens, char *cmd_full_path,
 		env_node *env_head);
+void free_for_execve(char *cmd, char *echo_arg_string, char *buff,
+		char **arr_tokens, char **_env);
+char **arrange_environ(char **_environ, env_node *head);
+void free_environ(char **env);
 
 /* get */
 char *get_tokens(char *buffer, char ***arr_tokens, env_node *head);
