@@ -72,3 +72,6 @@ Fri Nov 11 14:02:07 2022
 Fri Nov 11 14:03:26 2022
  From Chee: To super, I have fixed previously discussed issues with exit and cd, and have modified them to use the linked list of env variables. 
 
+Fri Nov 11 15:52:44 2022
+ From Chee: I've added a makefile for compilation. You can run 'make simple_shell' and it will updathe executable 'simple_shell' :).
+
