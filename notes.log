@@ -26,7 +26,7 @@ Tue Nov  8 00:53:52 2022
  From Ovy: I can't seem to figure out how to check the updated environment after calling setenv
 
 Tue Nov  8 00:54:57 2022
- From Ovy: Kindly run valgrind on the updated version of our program. 
+ From Ovy: Kindly run valgrind on the updated version of our program.
 
 Tue Nov  8 01:01:05 2022
  From Ovy: More than 5 functions in tRash.c.
@@ -42,21 +42,36 @@ Tue Nov  8 19:18:20 2022
  The number can only be positive.
  The exit status is always the number mod 256.
 
-Tue Nov  8 23:45:28 2022
- From Ovy: I fixed the exit builtin. The cd one is still pending, I'm on it.
+Thu Nov 10 08:42:36 2022
+ From chee: ovy, when exit code too long or too high, display an error message and do not exit.
 
-Wed Nov  9 03:02:04 2022
- From Ovy: We should take out some unused functions and their protoypes. ,. An example of such would be the check_builtins function. I can also spot the change_dir and exit_sh functions, and I think they should go as well. 
+Thu Nov 10 08:43:29 2022
+ From chee: chee, find way to get exit correct exit status of previous process for 'echo $?'
 
-Wed Nov  9 04:21:22 2022
- From Ovy: The setenv function is up now, but I'd need to find a way to add a previously non-existent variable to the environment. The current version works just fine for cd, since we need to overwrite both the PWD and OLDPWD variables.
+Thu Nov 10 08:44:21 2022
+ From chee: chee, find way to take out the full path of commands before they can display their error message.
 
-Wed Nov  9 04:44:04 2022
- From Ovy: I have created a test file "setenv_test.c" for testing the current vrsion of the setenv implementation. Here's the command for running it with alll its the dependent c files: gcc setenv_test.c builtins.c _strncmp.c _strlen.c str_concat.c _atoi.c _strdup.c -o test
+Thu Nov 10 09:16:13 2022
+ From chee: The current version of echo now supports all the relevant escape characters. It also acts exactly like the echo in sh. 
 
-Wed Nov  9 04:45:48 2022
- From Ovy: Kindly run valgrind on builtins.c
+Thu Nov 10 17:02:20 2022
+ From Chee: to superstar, I have written all the functions (I think) that can will do all the operations our env linked list requires.
+ I have incorporated the linked list into the program. 08:42 message still valid.
+Thu Nov 10 17:05:56 2022
+ From Chee: to superstar, I have added the env built-in which will print from our linked list instead of the executable.
 
-Wed Nov  9 04:47:29 2022
- From Ovy: I took a look at the variable replacement file, amazing work Chee. It's a lot to digest, so I'll go back to it later in the day, and tell you if I snotice any oversights.
+Thu Nov 10 17:30:18 2022
+ From chee: to super, if you get around to working on set and unset env, there's a test_env.c you can use to see how the function you can use work.
+
+Thu Nov 10 21:22:49 2022
+ From chee: to super, I have worked on setenv and unsetenv, ignore previous note.
+
+Fri Nov 11 14:02:07 2022
+ From Chee: To super, I have written and incorporated the functions that create an array from the current version of our list and passes to execve.
+
+Fri Nov 11 14:03:26 2022
+ From Chee: To super, I have fixed previously discussed issues with exit and cd, and have modified them to use the linked list of env variables. 
+
+Fri Nov 11 15:52:44 2022
+ From Chee: I've added a makefile for compilation. You can run 'make simple_shell' and it will updathe executable 'simple_shell' :).
 

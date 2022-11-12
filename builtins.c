@@ -1,24 +1,26 @@
 #include "main.h"
 
 /**
- * exit - exits a process
+ * _exit_th - exits a process
  * @arr_tokens: the array to check for a builtin command
- * @env: a pointer to the environment variables
- * @buffer: the temporay buffer holding input data
+ * @env_head: Head pointer to the linked list of environment variables
+ * @buffer: the temporary buffer holding input data
  *
  * Return: void on success,
  * otherwise, NULL
 */
-
-char *_exit_th(char **arr_tokens, char **env, char *buffer)
+char *_exit_th(char **arr_tokens, env_node *env_head, char *buffer)
 {
-	int status;
+	int status = 0;
 
-	if (!arr_tokens[1])
-		status = 0;
-	else
-		status = _special_atoi(arr_tokens[1]);
+	if (arr_tokens[1])
+	{
+		status = exit_atoi(arr_tokens[1]);
+		if (status == -1)
+			return (NULL);
+	}
 	status %= 256;
+	free_env_list(env_head);
 	free(arr_tokens);
 	free(buffer);
 	exit(status);
@@ -27,74 +29,71 @@ char *_exit_th(char **arr_tokens, char **env, char *buffer)
 }
 
 /**
- * cd - changes the present working directory
- * @arr_tokens: the array to check for a builtin command
- * @env: a pointer to the environment variables
- * @buffer: the temporay buffer holding input data
+ * cd - Changes the present working directory
+ * @arr_tokens: The array to check for a builtin command
+ * @env_head: Head pointer to list of the environment variables
+ * @buffer: The temporary buffer holding input data
  *
- * Return: ok, if successfull,
+ * Return: ok, if successful,
  * otherwise, NULL
 */
-
-char *cd(char **arr_tokens, char **env, char *buffer)
+char *cd(char **arr_tokens, env_node *env_head, char *buffer)
 {
-	char *var_val;
-	char *old_buff, *buff;
-	char *new, *old;
-	int i = 0;
+	char *pwd, *oldpwd = getcwd(NULL, 0);
 
 	if (arr_tokens[2])
 		return (NULL);
 
-	old_buff = NULL;
-	old_buff = getcwd(old_buff, 0);
-
 	if (arr_tokens[1])
-		var_val = arr_tokens[1];
-	else
-		var_val = _getenv("HOME", env);
-
-	if (chdir(var_val) == 0)
 	{
-		buff = NULL;
-		buff = getcwd(buff, 0);
-		new = _strdup(buff);
-		old = _strdup(old_buff);
-
-		setenviron("OLDPWD",old, 1);
-		setenviron("PWD",new, 1);
-		free(buff);
-		free(old_buff);
-		free(new);
-		free(old);
-		free(buffer);
- 		free(arr_tokens);
-		return("ok");
+		if (_strcmp(arr_tokens[1], "-") == 0)
+		{
+			pwd = _getenv("OLDPWD", env_head);
+			if (chdir(pwd) == 0)
+			{
+				write(1, pwd, _strlen(pwd));
+				write(1, "\n", 1);
+				update_var_for_cd(env_head, arr_tokens, buffer, pwd, oldpwd);
+				return ("ok");
+			}
+		}
+		else if (chdir(arr_tokens[1]) == 0)
+		{
+			update_var_for_cd(env_head, arr_tokens, buffer, arr_tokens[1], oldpwd);
+			return("ok");
+		}
 	}
-	free(old_buff);
-
+	else
+	{
+		pwd = _getenv("HOME", env_head);
+		if (chdir(pwd) == 0)
+		{
+			update_var_for_cd(env_head, arr_tokens, buffer, pwd, oldpwd);
+			return ("ok");
+		}
+	}
+	free(oldpwd);
 	return (NULL);
 }
 
 /**
- * _setenv - sets an environment variable
- * @arr_tokens: the array to check for a builtin command
- * @env: a pointer to the environment variables
- * @buffer: the temporay buffer holding input data
+ * _env - Prints the list of environment variables.
+ * @arr_tokens: Array of tokens.
+ * @env_head: Head pointer to linked list.
+ * @buffer: Commandline buffer.
  *
- * Return: ok on success,
- * otherwise, NULL
-*/
-
-char *_setenv(char **arr_tokens, char **env, char *buffer)
+ * Return: ok if successful, NULL if failed.
+ */
+char *_env(char **arr_tokens, env_node *env_head, char *buffer)
 {
-	int overwrite;
-
-	if (!arr_tokens[1] || !arr_tokens[2] || !arr_tokens[3])
-		return (NULL);
-	overwrite = _atoi(arr_tokens[3]);
-	if (setenviron(arr_tokens[1], arr_tokens[2], overwrite))
-		return (NULL);
+	if (env_head)
+	{
+		write(1, env_head->name, _strlen(env_head->name));
+		write(1, env_head->equals, 1);
+		write(1, env_head->value, _strlen(env_head->value));
+		write(1, "\n", 1);
+		_env(arr_tokens, env_head->next, buffer);
+	}
 	else
 	{
 		free(buffer);
@@ -104,50 +103,44 @@ char *_setenv(char **arr_tokens, char **env, char *buffer)
 }
 
 /**
- * setenviron - sets an environment variable
- * @name: the variable identifier to be added/updated
- * @value: the value of the variable
- * @overwrite: the flag to overwrite an existing variable,
- * 0 for no, other numbers for yes
+ * _setenv - Sets an environment variable
+ * @arr_tokens: The array to check for a builtin command
+ * @env_head: Head pointer to the linked list of environment variables
+ * @buffer: The temporary buffer holding input data
  *
  * Return: 0 on success,
  * otherwise, -1
 */
-
-int setenviron(char *name, char *value, int overwrite)
+char *_setenv(char **arr_tokens, env_node *env_head, char *buffer)
 {
-	extern char **environ;
-	char **env = environ;
-	char *var_exists, *buff, *temp;
-	int i = 0;
+	if (arr_tokens[3])
+		write_to_stderr("%c: invalid number of arguments\n", NULL, 0, arr_tokens[0], NULL);
 
-	if (!name || !value)
-		return (-1);
-
-	buff = malloc(sizeof(_strlen(name)) + sizeof(_strlen(value)) + 2);
-	if (!buff)
-		return (-1);
-
-	temp = str_concat(name, "=");
-	temp = str_concat(temp, value);
-	buff = temp;
-
-	for (; env[i]; i++)
-	{
-		if (_strncmp(env[i], name, _strlen(name)) == 0)
-		{
-			if (overwrite)
-			{
-				env[i] = buff;
-				break;
-			}
-			else
-				break;
-		}
-	}
-	/*if variable does not exist, add it to the environment*/
-	
-	buff = NULL;
-	free(buff);
-	return(0);
+	if (!replace_env_node(env_head, arr_tokens[1], arr_tokens[2]))
+		write_to_stderr("%c: failed to set variable\n", NULL, 0, arr_tokens[0], NULL);
+	free(buffer);
+	free(arr_tokens);
+	return ("ok");
 }
+
+/**
+ * _unsetenv - Removes an environment variable.
+ * @arr_tokens: The array to check for a builtin command.
+ * @env_head: A pointer to the environment variables.
+ * @buffer: The temporary buffer holding input data.
+ *
+ * Return: ok on success,
+ * otherwise, NULL
+*/
+char *_unsetenv(char **arr_tokens, env_node *env_head, char *buffer)
+{
+	if (arr_tokens[2])
+		write_to_stderr("%c: invalid number of arguments\n", NULL, 0, arr_tokens[0], NULL);
+
+	if (!delete_env_node(env_head, arr_tokens[1]))
+		write_to_stderr("%c: failed to unset variable\n", NULL, 0, arr_tokens[0], NULL);
+	free(buffer);
+	free(arr_tokens);
+	return ("ok");
+}
+
