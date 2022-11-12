@@ -75,3 +75,12 @@ Fri Nov 11 14:03:26 2022
 Fri Nov 11 15:52:44 2022
  From Chee: I've added a makefile for compilation. You can run 'make simple_shell' and it will updathe executable 'simple_shell' :).
 
+Sat Nov 12 21:05:41 2022
+ From Chee: superestrella, renamed check_builtins.c to checks.c to accomodate another check function.
+
+Sat Nov 12 21:07:00 2022
+ From Chee: superestrella, put some of the lines in the main function in a function 'handle_cmds.c'.
+
+Sat Nov 12 21:09:24 2022
+ From Chee: superstar, created a function check_mul_cmds to check for multiple commands in checks.c
+

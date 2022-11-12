@@ -65,7 +65,6 @@ char *_exit_th(char **arr_tokens, env_node *env_head, char *buffer);
 char *cd(char **arr_tokens, env_node *env_head, char *buffer);
 char *_setenv(char **arr_tokens, env_node *env_head, char *buffer);
 char *_unsetenv(char **arr_tokens, env_node *env_head, char *buffer);
-char *builtins(char **arr_tokens, env_node *env_head, char *buffer);
 char *_env(char **arr_tokens, env_node *env_head, char *buffer);
 
 /* execve */
@@ -81,6 +80,15 @@ char *get_tokens(char *buffer, char ***arr_tokens, env_node *head);
 char *_getenv(char *var, env_node *env_head);
 char *full_cmd(char *cmd, char *path);
 char *_getcmd(char *cmd, char **arr_tokens, env_node *env_head);
+
+/* handle_cmds */
+char *handle_cmds(env_node *env_head, char *av, char *buffer,
+		size_t *loop_count);
+
+/* checks */
+void check_mul_cmds(env_node *env_head, char *av, char *buffer,
+		size_t *loop_count);
+char *check_builtins(char **arr_tokens, env_node *env_head, char *buffer);
 
 /* echo */
 char *sort_echo(char ***arr_tokens, env_node *env_head, int stat);
