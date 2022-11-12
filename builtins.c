@@ -39,11 +39,12 @@ char *_exit_th(char **arr_tokens, env_node *env_head, char *buffer)
 */
 char *cd(char **arr_tokens, env_node *env_head, char *buffer)
 {
-	char *pwd, *oldpwd = getcwd(NULL, 0);
+	char *pwd, *oldpwd;
 
 	if (arr_tokens[2])
 		return (NULL);
 
+	oldpwd = getcwd(NULL, 0);
 	if (arr_tokens[1])
 	{
 		if (_strcmp(arr_tokens[1], "-") == 0)
