@@ -223,6 +223,8 @@ char *sort_echo(char ***arr_tokens, env_node *env_head, int stat)
 			}
 			string[str_len++] = arr_tokens[0][i][j];
 			doll_flag++;
+			if (str_len == str_size)
+				string = _realloc(string, str_size, str_size + BUFF_SIZE), str_size += BUFF_SIZE;
 		}
 	}
 	string[str_len] = '\0';

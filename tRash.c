@@ -2,6 +2,8 @@
 
 /**
  * main - Entry point of program.
+ * @argc: Number of arguments.
+ * @argv: Array of strings.
  *
  * Return: 0 on success.
  */
@@ -40,6 +42,6 @@ int main(int argc, char **argv)
 
 		handle_cmds(env_head, argv[0], buffer, &loop_count);
 	}
-	return (0);
+	exit(EXIT_SUCCESS);
 }
 
