@@ -58,7 +58,7 @@ extern char **environ;
 ssize_t _getline(char **line_buff, size_t *capacity, FILE *stream);
 
 /* _strtok */
-char *_strtok(char *str, const char *delim);
+char *_strtok_and_cmnt(char *str, const char *delim);
 
 /*prototypes for builtin functions*/
 char *_exit_th(char **arr_tokens, env_node *env_head, char *buffer);

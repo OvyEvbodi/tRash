@@ -44,7 +44,7 @@ void check_mul_cmds(env_node *env_head, char *av, char *buffer,
 		size_t *loop_count)
 {
 	size_t i, j = 0, buff_size = BUFF_SIZE;
-	char *pass_buff;
+	char *pass_buff, hash = NO;
 
 	for (i = 0; buffer[i]; i++)
 	{
@@ -68,13 +68,17 @@ void check_mul_cmds(env_node *env_head, char *av, char *buffer,
 			}
 			buff_size += BUFF_SIZE;
 		}
-		if (pass_buff[j - 1] == ';' || buffer[i + 1] == 0)
+		if (pass_buff[j - 1] == ';' || pass_buff[j - 1] == '#' || buffer[i + 1] == 0)
 		{
-			if (pass_buff[j - 1] == ';')
+			if (pass_buff[j - 1] == '#')
+				hash = YES;
+			if (pass_buff[j - 1] == ';' || pass_buff [j - 1] == '#')
 				pass_buff[j - 1] = '\0';
 			else
 				pass_buff[j] = '\0';
 			handle_cmds(env_head, av, pass_buff, loop_count);
+			if (hash)
+				break;
 			j = 0;
 			continue;
 		}

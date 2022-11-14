@@ -4,7 +4,7 @@
  * handle_cmds - Parses command line.
  * @env_head: Head pointer to linked list of environment variables.
  * @av: Name of shell program.
- * @buffer: Commandline buffer from _getline.j
+ * @buffer: Commandline buffer from _getline.
  * @loop_count: Number of prompts displayed by our program.
  *
  * Return: OK.
@@ -15,6 +15,13 @@ char *handle_cmds(env_node *env_head, char *av, char *buffer,
 	char **arr_tokens, *token_zero, *cmd_full_path;
 
 	token_zero = get_tokens(buffer, &arr_tokens, env_head);
+	if (!*token_zero)
+	{
+		free(buffer);
+		free(arr_tokens);
+		return (NULL);
+	}
+
 	if (check_builtins(arr_tokens, env_head, buffer))
 		return ("OK");
 
