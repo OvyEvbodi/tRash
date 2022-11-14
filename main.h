@@ -16,8 +16,32 @@
 #define NO		0
 #define YES		1
 
+/* echo */
+#define PID		1
+#define STAT		2
+/***************************/
+
+
+/**** for env ****/
+typedef struct env
+{
+	char *name;
+	char *equals;
+	char *value;
+	struct env *next;
+} env_node;
+
+env_node *env_list(char **env);
+env_node *create_env_list(env_node **head, char *name, char *value);
+env_node *create_env_node(char *name, char *value);
+env_node *add_to_existing(env_node **head, char *name, char *value);
+env_node *replace_env_node(env_node *node, char *name, char *value);
+char *delete_env_node(env_node *node, char *name);
+void free_env_list(env_node *head);
+/***************************/
+
 /**
- * struct cmd - defines a command
+ * struct command - defines a command
  * @name: the name of the command
  * @op: the function pointer to the operation to be performed
 */
@@ -25,20 +49,60 @@
 typedef struct command
 {
 	char *name;
-	char *(*op)(char **arr_tokens, char **env, char *buffer);
+	char *(*op)(char **arr_tokens, env_node *env_head, char *buffer);
 } cmds;
 
-static int status;
-/*prototypes for builtin functions*/
-char *_exit_th(char **arr_tokens, char **env, char *buffer);
-char *cd(char **arr_tokens, char **env, char *buffer);
-char *_setenv(char **arr_tokens, char **env, char *buffer);
-char *builtins(char **arr_tokens, char **env, char *buffer);
+extern char **environ;
 
-/*prototypes for other functions*/
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+/* _getline */
 ssize_t _getline(char **line_buff, size_t *capacity, FILE *stream);
+
+/* _strtok */
 char *_strtok(char *str, const char *delim);
+
+/*prototypes for builtin functions*/
+char *_exit_th(char **arr_tokens, env_node *env_head, char *buffer);
+char *cd(char **arr_tokens, env_node *env_head, char *buffer);
+char *_setenv(char **arr_tokens, env_node *env_head, char *buffer);
+char *_unsetenv(char **arr_tokens, env_node *env_head, char *buffer);
+char *builtins(char **arr_tokens, env_node *env_head, char *buffer);
+char *_env(char **arr_tokens, env_node *env_head, char *buffer);
+
+/* execve */
+void exec_cmd(char *buffer, char **arr_tokens, char *cmd_full_path,
+		env_node *env_head);
+void free_for_execve(char *cmd, char *echo_arg_string, char *buff,
+		char **arr_tokens, char **_env);
+char **arrange_environ(char **_environ, env_node *head);
+void free_environ(char **env);
+
+/* get */
+char *get_tokens(char *buffer, char ***arr_tokens, env_node *head);
+char *_getenv(char *var, env_node *env_head);
+char *full_cmd(char *cmd, char *path);
+char *_getcmd(char *cmd, char **arr_tokens, env_node *env_head);
+
+/* echo */
+char *sort_echo(char ***arr_tokens, env_node *env_head, int stat);
+void handle_esc(char ***arr_tokens, char **string, size_t *str_len, size_t i,
+		size_t *j);
+char *mov_num_vals(char **string, size_t *str_len, size_t *str_size,
+		size_t type, size_t *j, size_t *doll_flag, int stat);
+char *mov_var_val(char ***arr_tokens, env_node *env_head, char **string,
+		size_t *str_len, size_t *j, size_t i, size_t *doll_flag);
+char *handle_exp(char ***arr_tokens, env_node *env_head, char **string,
+		size_t *str_len, size_t *str_size, size_t *j, size_t i, size_t *doll_flag, int stat);
+
+/* end */
+void eof(char *buffer, env_node *env_head);
+void error_exit(char *msg, env_node *env_head);
+void exit_sh(char **arr_tokens, char *buffer, env_node *env_head);
+void exit_fail(char *msg, char *buffer, char **arr_tokens, env_node *env_head);
+
+/* utilities */
+int write_to_stderr(char *format, char *arg_zero, size_t loop_count,
+		char *tok_zero, char *tok_one);
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 int _strcmp(char *s1, char *s2);
 int _strncmp(char *, char *, size_t);
 size_t _strlen(char *str);
@@ -48,28 +112,11 @@ char **_strtow(char *str);
 char *_strcpy(char *, char *);
 char *_strdup(char *);
 char *str_concat(char *, char *);
-
-int _special_atoi(char *s);
-int _atoi(char *s);
-char *vars(char **arr_tokens, char **env);
-char *_strstr(char *haystack, char *needle, size_t *i);
-/***********************Ovy's addition for setenv************************/
-int setenviron(char *name, char *value, int overwrite);
-
-char *_getenv(char *var, char **env);
-char *full_cmd(char *cmd, char *path);
-char *_getcmd(char *cmd, char **arr_tokens, char **env);
-void eof(char *buffer);
-void error_exit(char *msg);
-char *get_tokens(char *buffer, char ***arr_tokens);
-int change_dir(char **arr_tokens, char **env);
-void exit_sh(char **arr_tokens, char *buffer);
-void exit_fail(char *msg, char *buffer, char **arr_tokens);
-int check_builtins(char **arr_tokens, char *buffer, char **env);
-void exec_cmd(char *buffer, char **arr_tokens, char *cmd_full_path, char **env);
-
-/************** Chee-z's additions for echo ********************/
-char *sort_echo(char ***arr_tokens, char **env);
+char *_strstr(char *haystack, char *needle);
 char *conv_to_char(size_t num);
+int _atoi(char *s);
+int exit_atoi(char *s);
+void update_var_for_cd(env_node *head, char **arr_tokens, char *buffer,
+		char *pwd, char *oldpwd);
 
-#endif /*MAIN_H*/
+#endif /* for MAIN_H */
