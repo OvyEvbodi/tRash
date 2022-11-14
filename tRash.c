@@ -24,7 +24,7 @@ int main(int argc, char **argv)
 		buffer = NULL;
 		buff_size = 0;
 		loop_count++;
-		write(1, "tRash-->$ ", 10);
+		write(0, "tRash>>$ ", 9);
 
 		if (_getline(&buffer, &buff_size, stdin) == -1)
 			eof(buffer, env_head);

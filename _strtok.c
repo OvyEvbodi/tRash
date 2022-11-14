@@ -1,6 +1,6 @@
 #include "main.h"
 
-char *_strtok(char *str, const char *delim)
+char *_strtok_and_cmnt(char *str, const char *delim)
 {
 	char *token;
 	static char *next_token = NULL, *end_of_string = NULL;
@@ -19,6 +19,12 @@ char *_strtok(char *str, const char *delim)
 		if (next_token != token)
 			if (*next_token && !*(next_token - 1))
 				break;
+		/* for handling comments */
+		if (*next_token == '#')
+		{
+			*next_token = '\0';
+			return (token);
+		}
 		for (ind = 0; delim[ind]; ind++)
 		{
 			if (delim[ind] == *next_token)

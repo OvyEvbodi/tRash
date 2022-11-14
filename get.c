@@ -108,7 +108,7 @@ char *get_tokens(char *buffer, char ***arr_tokens, env_node *env_head)
 		error_exit("error: could not tokenize\n", env_head);
 	}
 
-	token = _strtok(buffer, delim_str);
+	token = _strtok_and_cmnt(buffer, delim_str);
 	arr_tokens[0][i++] = token;
 	token_zero = token;
 
@@ -125,7 +125,7 @@ char *get_tokens(char *buffer, char ***arr_tokens, env_node *env_head)
 			}
 			buff_size += 70;
 		}
-		token = _strtok(NULL, delim_str);
+		token = _strtok_and_cmnt(NULL, delim_str);
 		arr_tokens[0][i++] = token;
 	}
 	arr_tokens[0][i] = NULL;
