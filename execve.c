@@ -83,8 +83,6 @@ void exec_cmd(char *buffer, char **arr_tokens, char *cmd_full_path,
 	char *reval = NULL, *echo_arg_string = NULL, **_env = NULL;
 	static int status;
 
-	arr_tokens[0] = cmd_full_path;
-
 	if (_strstr(cmd_full_path, "echo"))
 		echo_arg_string = sort_echo(&arr_tokens, env_head, status);
 
