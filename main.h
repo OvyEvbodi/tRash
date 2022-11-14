@@ -23,6 +23,15 @@
 
 
 /**** for env ****/
+
+/**
+ * struct env - defines an environment variable
+ * @name: the name of the variable
+ * @equals: an equal to symbol
+ * @value: the value of the variable
+ * @next: the next node
+*/
+
 typedef struct env
 {
 	char *name;
