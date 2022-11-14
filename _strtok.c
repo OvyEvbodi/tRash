@@ -1,9 +1,17 @@
 #include "main.h"
 
+/**
+ * _strtok_and_cmnt - tokenizes a string and skips comments
+ * @str: the string to tokenize
+ * @delim: the delimiter to split the string with
+ *
+ * Return: a pointer to the current token
+ */
+
 char *_strtok_and_cmnt(char *str, const char *delim)
 {
 	char *token;
-	static char *next_token = NULL, *end_of_string = NULL;
+	static char *next_token, *end_of_string;
 	size_t ind, flag = NO_VALID_CHAR;
 
 	if (str)

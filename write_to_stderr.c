@@ -3,6 +3,8 @@
 /**
  * write_to_stderr - Prints a formatted string to standard error stream.
  * @format: Formatted string.
+ * @arg_zero: the first argument.
+ * @loop_count: the count of commands used so far
  * @tok_zero: Command inputed by user.
  * @tok_one: First argument to command.
  *

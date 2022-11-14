@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * _strcmp - Compares two strings up to n bytes.
+ * _strncmp - Compares two strings up to n bytes.
  * @s1: First argument, and string to the be compared to.
  * @s2: Second argument, and string to be compared.
  * @n: Number of bytes to compare.
