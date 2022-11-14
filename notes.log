@@ -42,7 +42,6 @@ Tue Nov  8 19:18:20 2022
  The number can only be positive.
  The exit status is always the number mod 256.
 
-<<<<<<< HEAD
 Tue Nov  8 23:45:28 2022
  From Ovy: I fixed the exit builtin. The cd one is still pending, I'm on it.
 
@@ -61,8 +60,6 @@ Wed Nov  9 04:45:48 2022
 Wed Nov  9 04:47:29 2022
  From Ovy: I took a look at the variable replacement file, amazing work Chee. It's a lot to digest, so I'll go back to it later in the day, and tell you if I snotice any oversights.
 
-||||||| merged common ancestors
-=======
 Thu Nov 10 08:42:36 2022
  From chee: ovy, when exit code too long or too high, display an error message and do not exit.
 
@@ -96,4 +93,3 @@ Fri Nov 11 14:03:26 2022
 Fri Nov 11 15:52:44 2022
  From Chee: I've added a makefile for compilation. You can run 'make simple_shell' and it will updathe executable 'simple_shell' :).
 
->>>>>>> 2885638d68f66bd9d8d92c2e6ea23c12ae3bb2e2
