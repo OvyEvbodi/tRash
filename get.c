@@ -98,8 +98,8 @@ char *_getcmd(char *cmd, char **arr_tokens, env_node *env_head)
  */
 char *get_tokens(char *buffer, char ***arr_tokens, env_node *env_head)
 {
-	char *token_zero = NULL, *token = NULL, *delim_str = " \t\n\r\a", i = 0;
-	size_t buff_size = 70;
+	char *token_zero = NULL, *token = NULL, *delim_str = " \t\n\r\a";
+	size_t buff_size = 70, i = 0;
 
 	*arr_tokens = malloc(sizeof(char *) * buff_size);
 	if (!*arr_tokens)
