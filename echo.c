@@ -107,7 +107,8 @@ char *mov_var_val(char ***arr_tokens, env_node *env_head, char **string,
  * Return: ok if successful, NULL if error occurs.
  */
 char *handle_exp(char ***arr_tokens, env_node *env_head, char **string,
-		size_t *str_len, size_t *str_size, size_t *j, size_t i, size_t *doll_flag, int stat)
+		size_t *str_len, size_t *str_size, size_t *j, size_t i,
+		size_t *doll_flag, int stat)
 {
 	char *reval;
 
@@ -196,7 +197,6 @@ char *sort_echo(char ***arr_tokens, env_node *env_head, int stat)
 
 	if (!string)
 		return (NULL);
-
 	for (i = 1; arr_tokens[0][i]; i++)
 	{
 		if (started && doll_flag)
@@ -224,7 +224,8 @@ char *sort_echo(char ***arr_tokens, env_node *env_head, int stat)
 			string[str_len++] = arr_tokens[0][i][j];
 			doll_flag++;
 			if (str_len == str_size)
-				string = _realloc(string, str_size, str_size + BUFF_SIZE), str_size += BUFF_SIZE;
+				string = _realloc(string, str_size, str_size + BUFF_SIZE),
+				       str_size += BUFF_SIZE;
 		}
 	}
 	string[str_len] = '\0';

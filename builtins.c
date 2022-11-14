@@ -61,7 +61,7 @@ char *cd(char **arr_tokens, env_node *env_head, char *buffer)
 		else if (chdir(arr_tokens[1]) == 0)
 		{
 			update_var_for_cd(env_head, arr_tokens, buffer, arr_tokens[1], oldpwd);
-			return("ok");
+			return ("ok");
 		}
 	}
 	else
@@ -115,10 +115,12 @@ char *_env(char **arr_tokens, env_node *env_head, char *buffer)
 char *_setenv(char **arr_tokens, env_node *env_head, char *buffer)
 {
 	if (arr_tokens[3])
-		write_to_stderr("%c: invalid number of arguments\n", NULL, 0, arr_tokens[0], NULL);
+		write_to_stderr("%c: invalid number of arguments\n",
+				NULL, 0, arr_tokens[0], NULL);
 
 	if (!replace_env_node(env_head, arr_tokens[1], arr_tokens[2]))
-		write_to_stderr("%c: failed to set variable\n", NULL, 0, arr_tokens[0], NULL);
+		write_to_stderr("%c: failed to set variable\n",
+				NULL, 0, arr_tokens[0], NULL);
 	free(buffer);
 	free(arr_tokens);
 	return ("ok");
@@ -133,13 +135,16 @@ char *_setenv(char **arr_tokens, env_node *env_head, char *buffer)
  * Return: ok on success,
  * otherwise, NULL
 */
+
 char *_unsetenv(char **arr_tokens, env_node *env_head, char *buffer)
 {
 	if (arr_tokens[2])
-		write_to_stderr("%c: invalid number of arguments\n", NULL, 0, arr_tokens[0], NULL);
+		write_to_stderr("%c: invalid number of arguments\n",
+				NULL, 0, arr_tokens[0], NULL);
 
 	if (!delete_env_node(env_head, arr_tokens[1]))
-		write_to_stderr("%c: failed to unset variable\n", NULL, 0, arr_tokens[0], NULL);
+		write_to_stderr("%c: failed to unset variable\n",
+				NULL, 0, arr_tokens[0], NULL);
 	free(buffer);
 	free(arr_tokens);
 	return ("ok");

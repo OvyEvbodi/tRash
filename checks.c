@@ -72,7 +72,7 @@ void check_mul_cmds(env_node *env_head, char *av, char *buffer,
 		{
 			if (pass_buff[j - 1] == '#')
 				hash = YES;
-			if (pass_buff[j - 1] == ';' || pass_buff [j - 1] == '#')
+			if (pass_buff[j - 1] == ';' || pass_buff[j - 1] == '#')
 				pass_buff[j - 1] = '\0';
 			else
 				pass_buff[j] = '\0';

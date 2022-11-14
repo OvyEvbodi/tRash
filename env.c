@@ -101,6 +101,9 @@ env_node *replace_env_node(env_node *head, char *name, char *value)
  * delete_env_node - Deletes a variable in the list.
  * @head: Head pointer.
  * @name: Name of variable to delete.
+ *
+ * Return: ok if successful,
+ * otherwise, NULL
  */
 char *delete_env_node(env_node *head, char *name)
 {
@@ -118,11 +121,9 @@ char *delete_env_node(env_node *head, char *name)
 		tmp = tmp2;
 		return ("ok");
 	}
-
 	while (tmp)
 	{
 		if (tmp->next)
-		{
 			if (_strcmp(tmp->next->name, name) == 0)
 			{
 				if (tmp->next->next == NULL)
@@ -143,9 +144,7 @@ char *delete_env_node(env_node *head, char *name)
 					return ("ok");
 				}
 			}
-		}
 		tmp = tmp->next;
 	}
 	return (NULL);
 }
-

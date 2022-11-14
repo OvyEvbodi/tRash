@@ -48,10 +48,10 @@ int _special_atoi(char *s)
 		return (0);
 	while (i < len)
 	{
-			digit = s[i] - '0';
-			if (d % 2)
-				digit = -digit;
-			n = n * 10 + digit;
+		digit = s[i] - '0';
+		if (d % 2)
+			digit = -digit;
+		n = n * 10 + digit;
 		i++;
 	}
 	return (n);

@@ -43,7 +43,7 @@ void exit_sh(char **arr_tokens, char *buffer, env_node *env_head)
  * exit_fail - Exits the program after program has processed tokens.
  * @msg: Error message.
  * @buffer: Commandline buffer from _getline.
- * @arr_token: Array of tokens.
+ * @arr_tokens: Array of tokens.
  * @env_head: Head pointer to linked list of environment variables.
  */
 void exit_fail(char *msg, char *buffer, char **arr_tokens, env_node *env_head)
