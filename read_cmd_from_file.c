@@ -8,8 +8,7 @@
  */
 void read_cmd_from_file(env_node *env_head, char *av, char *av1)
 {
-	ssize_t rd_fd;
-	size_t rd, i, buff_size, loop_count = 0;
+	ssize_t rd_fd, buff_size, loop_count = 0;
 	char *buffer = NULL, *semi_colon;
 
 	rd_fd = open(av1, O_RDONLY);
