@@ -4,12 +4,14 @@
  * eof - Ends the program in case of eof.
  * @buffer: malloc'ed buffer for commandline.
  * @env_head: Head pointer to linked list of environment variables.
+ * @flag: To know whether to print new line or not.
  */
-void eof(char *buffer, env_node *env_head)
+void eof(char *buffer, env_node *env_head, char flag)
 {
 	free_env_list(env_head);
 	free(buffer);
-	write(1, "\n", 1);
+	if (flag == 1)
+		write(1, "\n", 1);
 	exit(EXIT_SUCCESS);
 }
 

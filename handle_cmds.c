@@ -14,6 +14,11 @@ char *handle_cmds(env_node *env_head, char *av, char *buffer,
 {
 	char **arr_tokens, *token_zero, *cmd_full_path;
 
+	if (!*buffer)
+	{
+		free(buffer);
+		return (NULL);
+	}
 	token_zero = get_tokens(buffer, &arr_tokens, env_head);
 	if (!*token_zero)
 	{

@@ -18,6 +18,8 @@ int main(int argc, char **argv)
 		write_to_stderr("%p: failed to run shell\n", argv[0], 0, NULL, NULL);
 		exit(EXIT_FAILURE);
 	}
+	if (argc > 1)
+		read_cmd_from_file(env_head, argv[0], argv[1]);
 
 	while (1)
 	{
@@ -26,8 +28,8 @@ int main(int argc, char **argv)
 		loop_count++;
 		write(0, "tRash>>$ ", 9);
 
-		if (_getline(&buffer, &buff_size, stdin) == -1)
-			eof(buffer, env_head);
+		if (_getline(&buffer, &buff_size, 0) == -1)
+			eof(buffer, env_head, 1);
 		if (buffer[0] == '\n')
 		{
 			free(buffer);

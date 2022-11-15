@@ -5,12 +5,12 @@
  *
  * @line_buff: a pointer to the input string
  * @capacity: the length of characters to be read
- * @stream: the stream to read from
+ * @fd: file descriptor to read from.
  *
  * Return: the number of characters read into line_buff,
  * otherwise, -1 if the end-of-file is reached.
 */
-ssize_t _getline(char **line_buff, size_t *capacity, FILE *stream)
+ssize_t _getline(char **line_buff, size_t *capacity, ssize_t fd)
 {
 	ssize_t rd, tot_read = 0, buff_len = BUFF_SIZE;
 	char *tmp_buff, c;
@@ -20,7 +20,7 @@ ssize_t _getline(char **line_buff, size_t *capacity, FILE *stream)
 		perror("Failed to allocate memory."), exit(EXIT_FAILURE);
 
 	do {
-		rd = read(STDIN_FILENO, &c, 1);
+		rd = read(fd, &c, 1);
 		if (rd == -1 || (rd == 0 && tot_read == 0))
 		{
 			*line_buff = tmp_buff;

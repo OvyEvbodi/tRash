@@ -9,6 +9,7 @@
 #include <sys/types.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <errno.h>
 
 #define BUFF_SIZE	1024
 #define NO_VALID_CHAR	0
@@ -64,10 +65,13 @@ typedef struct command
 extern char **environ;
 
 /* _getline */
-ssize_t _getline(char **line_buff, size_t *capacity, FILE *stream);
+ssize_t _getline(char **line_buff, size_t *capacity, ssize_t fd);
 
 /* _strtok */
 char *_strtok_and_cmnt(char *str, const char *delim);
+
+/* read_cmd_from_file */
+void read_cmd_from_file(env_node *env_head, char *av, char *av1);
 
 /*prototypes for builtin functions*/
 char *_exit_th(char **arr_tokens, env_node *env_head, char *buffer);
@@ -111,7 +115,7 @@ char *handle_exp(char ***arr_tokens, env_node *env_head, char **string,
 		size_t *str_len, size_t *str_size, size_t *j, size_t i, size_t *doll_flag, int stat);
 
 /* end */
-void eof(char *buffer, env_node *env_head);
+void eof(char *buffer, env_node *env_head, char flag);
 void error_exit(char *msg, env_node *env_head);
 void exit_sh(char **arr_tokens, char *buffer, env_node *env_head);
 void exit_fail(char *msg, char *buffer, char **arr_tokens, env_node *env_head);

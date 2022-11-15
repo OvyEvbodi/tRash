@@ -20,7 +20,7 @@ char *check_builtins(char **arr_tokens, env_node *env_head, char *buffer)
 		{"env", _env},
 		{"setenv", _setenv},
 		{"unsetenv", _unsetenv},
-		{"alias", _alias},
+/*		{"alias", _alias}, */
 		{NULL, NULL}
 	};
 
