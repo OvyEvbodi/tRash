@@ -87,3 +87,6 @@ Sat Nov 12 21:09:24 2022
 Tue Nov 15 04:01:03 2022
  From Ovy: If testing alias.c, compile with string_funcs_2.c
 
+Tue Nov 15 05:50:01 2022
+ From Ovy: to Chee, I'm currently working on the alias builtin, but haven't integrated it into our stable trash so as not to break the program.  Once I'm done with setting up the structure, I'll work on the command replacement. I have whiteboarded my possible solutions, so feel free to ask me about my approach.
+
