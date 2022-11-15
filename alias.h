@@ -21,5 +21,8 @@ typedef struct aliases {
 } alias;
 
 /* prototypes */
+void split_alias(char *alias_str, char **alias, char **expanded, int *shrt_len, int *full_len);
+char *print_alias(char *head);
+
 
 #endif /*ALIAS_H*/

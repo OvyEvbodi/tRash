@@ -84,3 +84,6 @@ Sat Nov 12 21:07:00 2022
 Sat Nov 12 21:09:24 2022
  From Chee: superstar, created a function check_mul_cmds to check for multiple commands in checks.c
 
+Tue Nov 15 04:01:03 2022
+ From Ovy: If testing alias.c, compile with string_funcs_2.c
+
