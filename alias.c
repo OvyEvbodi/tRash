@@ -43,7 +43,6 @@ void split_alias(char *alias_str, char **alias, char **expanded, int *shrt_len, 
 		}
 		shrt[(*shrt_len)++] = alias_str[i++];
 	}
-	printf("short -> %s, len -> %d, full -> %s, len -> %d full_len\n", shrt, *shrt_len, full, *full_len);
 
 	*alias = _strdup(shrt);
 	*expanded = _strdup(full);
@@ -146,6 +145,42 @@ char *print_alias(alias_t *head)
 	return ("ok");
 }
 
+/**
+ * _alias - handles alias builtin
+ * 
+ *
+*/
+
+char *_alias(char **arr_tokens, char *buffer)
+{
+	char *alias = NULL, *expanded = NULL;
+	int shrt_len = 0, full_len = 0;
+	alias_t *head = NULL, *node;
+
+	split_alias("push='smore and'", &alias, &expanded, &shrt_len, &full_len);
+	node = add_alias(&head, &alias, &expanded, &shrt_len, &full_len);
+	split_alias("p='git push origin main'", &alias, &expanded, &shrt_len, &full_len);
+	node = add_alias(&head, &alias, &expanded, &shrt_len, &full_len);
+
+	if (!arr_tokens[1])
+		print_alias(head);
+	return ("ok");
+}
+
+/**
+ * free_alias_list - Deletes the aliases linked list.
+ * @head: The head pointer to the list.
+ */
+void free_alias_list(alias_t *head)
+{
+	if (head)
+	{
+		free_alias_list(head->link);
+		free(head->shrt);
+		free(head->full);
+		free(head);
+	}
+}
 
 int main(void)
 {
@@ -153,10 +188,7 @@ int main(void)
 	int shrt_len = 0, full_len = 0;
 	alias_t *head = NULL, *node;
 
-	// printf("%s %s\n", alias, expanded);
 	split_alias("push='smore and'", &alias, &expanded, &shrt_len, &full_len);
-	// printf("\n%s %s\n", alias, expanded);
-	// printf("%d %d\n", shrt_len, full_len);
 	node = add_alias(&head, &alias, &expanded, &shrt_len, &full_len);
 	split_alias("p='git push origin main'", &alias, &expanded, &shrt_len, &full_len);
 	node = add_alias(&head, &alias, &expanded, &shrt_len, &full_len);

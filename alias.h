@@ -30,6 +30,7 @@ typedef struct aliases {
 void split_alias(char *alias_str, char **alias, char **expanded, int *shrt_len, int *full_len);
 alias_t *add_alias(alias_t **head, char **alias, char **expanded, int *shrt_len, int *full_len);
 char *print_alias(alias_t *head);
+char *_alias(char **arr_tokens, char *buffer);
 
 
 #endif /*ALIAS_H*/
