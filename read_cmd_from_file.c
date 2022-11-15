@@ -40,7 +40,7 @@ void read_cmd_from_file(env_node *env_head, char *av, char *av1)
 		semi_colon = _strchr(buffer, ';');
 		if (semi_colon)
 			*semi_colon = '\0';
-		handle_cmds(env_head, av, buffer, &loop_count);
+		handle_cmds(env_head, av1, buffer, &loop_count);
 	}
 }
 

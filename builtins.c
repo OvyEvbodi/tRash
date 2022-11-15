@@ -60,7 +60,9 @@ char *cd(char **arr_tokens, env_node *env_head, char *buffer)
 		}
 		else if (chdir(arr_tokens[1]) == 0)
 		{
-			update_var_for_cd(env_head, arr_tokens, buffer, arr_tokens[1], oldpwd);
+			pwd = getcwd(NULL, 0);
+			update_var_for_cd(env_head, arr_tokens, buffer, pwd, oldpwd);
+			free(pwd);
 			return ("ok");
 		}
 	}
