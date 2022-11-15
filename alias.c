@@ -17,6 +17,8 @@ void split_alias(char *alias_str, char **alias, char **expanded, int *shrt_len, 
 	int i = 0;
 	char full[BUFF_SIZE], shrt[BUFF_SIZE / 4];
 
+	*shrt_len = 0;
+	*full_len = 0;
 	while (alias_str[i])
 	{
 		if (alias_str[i] == '=')
@@ -60,7 +62,8 @@ void split_alias(char *alias_str, char **alias, char **expanded, int *shrt_len, 
 */
 
 
-alias_t *add_alias(alias_t **head, char **alias, char **expanded)
+alias_t *add_alias(alias_t **head, char **alias, char **expanded,
+int *shrt_len, int *full_len)
 {
 	alias_t *new;
 	alias_t *temp = *head;
@@ -71,6 +74,8 @@ alias_t *add_alias(alias_t **head, char **alias, char **expanded)
 	new->cmd = "alias";
 	new->shrt = _strdup(*alias);
 	new->full = _strdup(*expanded);
+	new->s_len = *shrt_len;
+	new->f_len = *full_len;
 	new->equal = '=';
 	new->pre = '\'';
 	new->post = '\'';
@@ -92,6 +97,55 @@ alias_t *add_alias(alias_t **head, char **alias, char **expanded)
 	return (new);
 }
 
+/**
+ * print_alias - prints a list of aliases
+ * @head: a pointer to the first node
+ *
+ * Return: ok, if successful,
+ * otherwise, NULL
+*/
+
+char *print_alias(alias_t *head)
+{
+	int index = 0;
+	char buffer[BUFF_SIZE];
+	/*is this better done dynamically?*/
+	
+	if (!head)
+		return (NULL);
+	while (head)
+	{
+
+		for (index = 0; index < 5;)
+		{
+			buffer[index++] = *(head->cmd);
+			(head->cmd)++;
+		}
+		buffer[index++] = ' ';
+		while (head->s_len--)
+		{
+			buffer[index++] = *(head->shrt);
+			(head->shrt)++;
+		}
+		buffer[index++] = head->equal;
+		buffer[index++] = head->pre;
+		while (head->f_len--)
+		{
+			buffer[index++] = *(head->full);
+			(head->full)++;
+		}
+		buffer[index++] = head->post;
+		buffer[index++] = '\n';
+		buffer[index++] = '\0';
+		write (1, buffer, index);
+		
+		/*figure out what to free, and what may be lost*/
+
+		head = head->link;
+	}
+	return ("ok");
+}
+
 
 int main(void)
 {
@@ -99,11 +153,13 @@ int main(void)
 	int shrt_len = 0, full_len = 0;
 	alias_t *head = NULL, *node;
 
-	printf("%s %s\n", alias, expanded);
+	// printf("%s %s\n", alias, expanded);
 	split_alias("push='smore and'", &alias, &expanded, &shrt_len, &full_len);
-	printf("\n%s %s\n", alias, expanded);
-	printf("%d %d\n", shrt_len, full_len);
-	node = add_alias(&head, &alias, &expanded);
-	printf("%s, %s, %s, %c, %c \n", node->cmd, node->shrt, node->full, node->pre, node->equal);
+	// printf("\n%s %s\n", alias, expanded);
+	// printf("%d %d\n", shrt_len, full_len);
+	node = add_alias(&head, &alias, &expanded, &shrt_len, &full_len);
+	split_alias("p='git push origin main'", &alias, &expanded, &shrt_len, &full_len);
+	node = add_alias(&head, &alias, &expanded, &shrt_len, &full_len);
+	print_alias(head);
 
 }
