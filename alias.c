@@ -154,7 +154,7 @@ char *print_alias(alias_t *head)
 char *_alias(char **arr_tokens, char *buffer)
 {
 	char *alias = NULL, *expanded = NULL;
-	int shrt_len = 0, full_len = 0;
+	int shrt_len = 0, full_len = 0, i = 0;
 	alias_t *head = NULL, *node;
 
 	split_alias("push='smore and'", &alias, &expanded, &shrt_len, &full_len);
@@ -164,6 +164,13 @@ char *_alias(char **arr_tokens, char *buffer)
 
 	if (!arr_tokens[1])
 		print_alias(head);
+	else
+	{
+		while (arr_token[i++])
+		{
+			/*call function to replace arr_token with head->full, to be continued...*/
+		}
+	}
 	return ("ok");
 }
 
