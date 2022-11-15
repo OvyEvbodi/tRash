@@ -15,9 +15,10 @@ typedef struct aliases {
 	char *alias;
 	char *shrt;
 	char *full;
-	char *pre:2;
-	char *post:1;
-} alias
+	char equal;
+	char pre;
+	char post;
+} alias;
 
 /* prototypes */
 
