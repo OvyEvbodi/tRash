@@ -12,8 +12,9 @@
 */
 ssize_t _getline(char **line_buff, size_t *capacity, ssize_t fd)
 {
-	ssize_t rd, tot_read = 0, buff_len = BUFF_SIZE;
 	char *tmp_buff, c;
+	ssize_t rd;
+	size_t buff_len = BUFF_SIZE, tot_read = 0;
 
 	tmp_buff = malloc(sizeof(char) * BUFF_SIZE);
 	if (!tmp_buff)
