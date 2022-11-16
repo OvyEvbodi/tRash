@@ -80,14 +80,23 @@ void free_for_execve(char *cmd, char *echo_arg_string, char *buff,
 void exec_cmd(char *buffer, char **arr_tokens, char *cmd_full_path,
 		env_node *env_head)
 {
-	char *reval = NULL, *echo_arg_string = NULL, **_env = NULL;
+	char *echo_arg_string = NULL, **_env = NULL;
 	static int status;
+	pid_t pid;
 
 	if (_strstr(cmd_full_path, "echo"))
 		echo_arg_string = sort_echo(&arr_tokens, env_head, status);
 
 	_env = arrange_environ(_env, env_head);
-	pid_t pid = fork();
+
+	pid = fork();
+	if (pid == -1)
+	{
+		write(2, "Error: exec failed\n", 19);
+		free_for_execve(cmd_full_path, echo_arg_string, buffer, arr_tokens, _env);
+		free_env_list(env_head);
+		exit(EXIT_FAILURE);
+	}
 
 	if (pid == 0)
 	{

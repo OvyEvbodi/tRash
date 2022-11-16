@@ -92,7 +92,7 @@ void free_environ(char **env);
 char *get_tokens(char *buffer, char ***arr_tokens, env_node *head);
 char *_getenv(char *var, env_node *env_head);
 char *full_cmd(char *cmd, char *path);
-char *_getcmd(char *cmd, char **arr_tokens, env_node *env_head);
+char *_getcmd(char *cmd, env_node *env_head);
 
 /* handle_cmds */
 char *handle_cmds(env_node *env_head, char *av, char *buffer,
@@ -112,7 +112,8 @@ char *mov_num_vals(char **string, size_t *str_len, size_t *str_size,
 char *mov_var_val(char ***arr_tokens, env_node *env_head, char **string,
 		size_t *str_len, size_t *j, size_t i, size_t *doll_flag);
 char *handle_exp(char ***arr_tokens, env_node *env_head, char **string,
-		size_t *str_len, size_t *str_size, size_t *j, size_t i, size_t *doll_flag, int stat);
+		size_t *str_len, size_t *str_size, size_t *j, size_t i, size_t *doll_flag,
+		int stat);
 
 /* end */
 void eof(char *buffer, env_node *env_head, char flag);

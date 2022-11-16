@@ -31,10 +31,10 @@ int write_to_stderr(char *format, char *arg_zero, size_t loop_count,
 					break;
 				case 'n':
 					num = conv_to_char(loop_count);
+					for (j = 0; num && num[j]; j++)
+						buffer[buff_ind++] = num[j];
 					if (num)
 					{
-						for (j = 0; num[j]; j++)
-							buffer[buff_ind++] = num[j];
 						free(num);
 						break;
 					}

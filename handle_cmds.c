@@ -30,7 +30,7 @@ char *handle_cmds(env_node *env_head, char *av, char *buffer,
 	if (check_builtins(arr_tokens, env_head, buffer))
 		return ("OK");
 
-	cmd_full_path = _getcmd(token_zero, arr_tokens, env_head);
+	cmd_full_path = _getcmd(token_zero, env_head);
 	if (!cmd_full_path)
 	{
 		if (_strcmp(token_zero, "cd") == 0)

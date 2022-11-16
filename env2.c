@@ -69,7 +69,7 @@ char *handle_env_value(char **env, char **value, char *buff, char *name,
 env_node *env_list(char **env)
 {
 	size_t i, j, k, buff_ind, flag, size, node_start = NO;
-	char *name = NULL, *value = NULL, *reval, *buff = malloc(BUFF_SIZE);
+	char *name = NULL, *value = NULL, *buff = malloc(BUFF_SIZE);
 	env_node *head = NULL;
 
 	for (i = 0; env[i]; i++)
@@ -79,13 +79,11 @@ env_node *env_list(char **env)
 		{
 			if (env[i][j] == '=')
 			{
-				reval = handle_env_name(&name, buff, buff_ind, &flag, &k);
+				handle_env_name(&name, buff, buff_ind, &flag, &k);
 				continue;
 			}
 			if (flag == 1)
-			{
-				reval = handle_env_value(env, &value, buff, name, &flag, i, &j, &size);
-			}
+				handle_env_value(env, &value, buff, name, &flag, i, &j, &size);
 			if (flag > 1)
 			{
 				for (k = 0; env[i][j]; k++)
