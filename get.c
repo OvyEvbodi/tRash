@@ -66,11 +66,10 @@ char *full_cmd(char *cmd, char *path)
  * _getcmd - Takes care of the format for running a command.
  * @cmd: The command.
  * @env_head: Head pointer to list of environment variables.
- * @arr_tokens: The array of tokens
  *
  * Return: Format in which command can be run, or NULL if it fails.
  */
-char *_getcmd(char *cmd, char **arr_tokens, env_node *env_head)
+char *_getcmd(char *cmd, env_node *env_head)
 {
 	char *path, *var_val;
 

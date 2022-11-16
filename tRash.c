@@ -15,7 +15,7 @@ int main(int argc, char **argv)
 
 	if (!env_head)
 	{
-		write_to_stderr("%p: failed to run shell\n", argv[0], 0, NULL, NULL);
+		write_to_stderr("%p: %n: failed to run shell\n", argv[0], loop_count, NULL, NULL);
 		exit(EXIT_FAILURE);
 	}
 	if (argc > 1)

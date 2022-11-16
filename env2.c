@@ -51,7 +51,7 @@ char *handle_env_value(char **env, char **value, char *buff, char *name,
 		(*size)++, (*j)++;
 	*j = tmp;
 	value[0] = malloc(sizeof(char) * *size + 1);
-	if (!value)
+	if (!value[0])
 	{
 		free(buff);
 		free(name);
@@ -69,7 +69,7 @@ char *handle_env_value(char **env, char **value, char *buff, char *name,
 env_node *env_list(char **env)
 {
 	size_t i, j, k, buff_ind, flag, size, node_start = NO;
-	char *name = NULL, *value = NULL, *reval, *buff = malloc(BUFF_SIZE);
+	char *name = NULL, *value = NULL, *buff = malloc(BUFF_SIZE);
 	env_node *head = NULL;
 
 	for (i = 0; env[i]; i++)
@@ -79,13 +79,13 @@ env_node *env_list(char **env)
 		{
 			if (env[i][j] == '=')
 			{
-				reval = handle_env_name(&name, buff, buff_ind, &flag, &k);
+				if (!handle_env_name(&name, buff, buff_ind, &flag, &k))
+					return (NULL);
 				continue;
 			}
 			if (flag == 1)
-			{
-				reval = handle_env_value(env, &value, buff, name, &flag, i, &j, &size);
-			}
+				if (!handle_env_value(env, &value, buff, name, &flag, i, &j, &size))
+					return (NULL);
 			if (flag > 1)
 			{
 				for (k = 0; env[i][j]; k++)
@@ -116,8 +116,10 @@ void free_env_list(env_node *head)
 	if (head)
 	{
 		free_env_list(head->next);
-		free(head->name);
-		free(head->value);
+		if (head->name)
+			free(head->name);
+		if (head->value)
+			free(head->value);
 		free(head);
 	}
 }
