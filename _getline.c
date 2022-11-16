@@ -18,7 +18,7 @@ ssize_t _getline(char **line_buff, size_t *capacity, ssize_t fd)
 
 	tmp_buff = malloc(sizeof(char) * BUFF_SIZE);
 	if (!tmp_buff)
-		perror("Failed to allocate memory."), exit(EXIT_FAILURE);
+		perror("Failed to allocate memory"), exit(EXIT_FAILURE);
 
 	do {
 		rd = read(fd, &c, 1);
@@ -35,7 +35,7 @@ ssize_t _getline(char **line_buff, size_t *capacity, ssize_t fd)
 		{
 			tmp_buff = _realloc(tmp_buff, buff_len, buff_len + BUFF_SIZE);
 			if (!tmp_buff)
-				perror("Failed to allocate memory."), exit(EXIT_FAILURE);
+				perror("Failed to allocate memory"), exit(EXIT_FAILURE);
 			buff_len += BUFF_SIZE;
 		}
 	} while (c != '\n');

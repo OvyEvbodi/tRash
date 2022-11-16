@@ -98,9 +98,12 @@ env_node *env_list(char **env)
 		if (name && value)
 		{
 			if (node_start == NO)
-				node_start = YES, head = create_env_list(&head, name, value);
+			{
+				node_start = YES;
+				head = create_env_list(&head, name, value), name = NULL, value = NULL;
+			}
 			else
-				create_env_list(&head, name, value);
+				create_env_list(&head, name, value), name = NULL, value = NULL;
 		}
 	}
 	free(buff);
