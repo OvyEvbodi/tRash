@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 		buffer = NULL;
 		buff_size = 0;
 		loop_count++;
-		write(0, "tRash>>$ ", 9);
+		write(0, "$ ", 2);
 
 		if (_getline(&buffer, &buff_size, 0) == -1)
 			eof(buffer, env_head, 1);
