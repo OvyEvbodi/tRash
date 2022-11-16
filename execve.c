@@ -75,10 +75,12 @@ void free_for_execve(char *cmd, char *echo_arg_string, char *buff,
  * @buffer: Commandline buffer used by _getline.
  * @arr_tokens: Array of tokens.
  * @cmd_full_path: Full path to command.
+ * @av: Name of shell program.
+ * @loop_count: Loop iteration.
  * @env_head: Head pointer to linked List of environment variables.
  */
-void exec_cmd(char *buffer, char **arr_tokens, char *cmd_full_path,
-		env_node *env_head)
+void exec_cmd(char *buffer, char **arr_tokens, char *cmd_full_path, char *av,
+		size_t loop_count, env_node *env_head)
 {
 	char *echo_arg_string = NULL, **_env = NULL;
 	static int status;
@@ -92,7 +94,8 @@ void exec_cmd(char *buffer, char **arr_tokens, char *cmd_full_path,
 	pid = fork();
 	if (pid == -1)
 	{
-		write(2, "Error: exec failed\n", 19);
+		write_to_stderr("%p: %n: %c: ", av, loop_count, arr_tokens[0], NULL);
+		perror("");
 		free_for_execve(cmd_full_path, echo_arg_string, buffer, arr_tokens, _env);
 		free_env_list(env_head);
 		exit(EXIT_FAILURE);
@@ -102,7 +105,8 @@ void exec_cmd(char *buffer, char **arr_tokens, char *cmd_full_path,
 	{
 		if (execve(cmd_full_path, arr_tokens, _env) == -1)
 		{
-			write(2, "Error: exec failed\n", 19);
+			write_to_stderr("%p: %n: %c: ", av, loop_count, arr_tokens[0], NULL);
+			perror("");
 			free_for_execve(cmd_full_path, echo_arg_string, buffer, arr_tokens, _env);
 			free_env_list(env_head);
 			exit(EXIT_FAILURE);

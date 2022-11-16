@@ -47,7 +47,7 @@ char *handle_cmds(env_node *env_head, char *av, char *buffer,
 		return ("OK");
 	}
 
-	exec_cmd(buffer, arr_tokens, cmd_full_path, env_head);
+	exec_cmd(buffer, arr_tokens, cmd_full_path, av, *loop_count, env_head);
 	return ("OK");
 }
 

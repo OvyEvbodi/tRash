@@ -81,8 +81,8 @@ char *_unsetenv(char **arr_tokens, env_node *env_head, char *buffer);
 char *_env(char **arr_tokens, env_node *env_head, char *buffer);
 
 /* execve */
-void exec_cmd(char *buffer, char **arr_tokens, char *cmd_full_path,
-		env_node *env_head);
+void exec_cmd(char *buffer, char **arr_tokens, char *cmd_full_path, char *av,
+		size_t loop_count, env_node *env_head);
 void free_for_execve(char *cmd, char *echo_arg_string, char *buff,
 		char **arr_tokens, char **_env);
 char **arrange_environ(char **_environ, env_node *head);
