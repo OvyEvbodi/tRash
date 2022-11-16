@@ -17,13 +17,13 @@ char *mov_num_vals(char **string, size_t *str_len, size_t *str_size,
 {
 	char *char_tmp_malloc, char_tmp[8];
 	size_t num_len = 0;
-	pid_t num;
+	pid_t num = 0;
 
 	if (type == PID)
 	{
 		num = getpid();
 	}
-	else if (type == STAT)
+	else
 	{
 		if (WIFEXITED(status))
 			num = WEXITSTATUS(status);
