@@ -15,12 +15,8 @@ void read_cmd_from_file(env_node *env_head, char *av, char *av1)
 	rd_fd = open(av1, O_RDONLY);
 	if (rd_fd == -1)
 	{
-		if (errno == EACCES)
-			write_to_stderr("%p: %n: cannot open %c: Permission denied\n",
-					av, loop_count, av1, NULL);
-		else if (errno == ENOENT)
-			write_to_stderr("%p: %n: cannot open %c: No such file\n",
-					av, loop_count, av1, NULL);
+		write_to_stderr("%p: %n: cannot open %c: ", av, loop_count, av1, NULL);
+		perror("");
 		free_env_list(env_head);
 		exit(EXIT_FAILURE);
 	}
