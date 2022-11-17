@@ -125,9 +125,9 @@ char *handle_exp(char ***arr_tokens, env_node *env_head, char **string,
 				return (NULL);
 			break;
 		case '\0':
-			doll_flag++;
+			(*doll_flag)++;
 			string[0][(*str_len)++] = '$';
-			(*j)++;
+			*j = *j + 2;
 			break;
 		default:
 			mov_var_val(arr_tokens, env_head, string, str_len, j, i, doll_flag);
@@ -221,15 +221,15 @@ char *sort_echo(char ***arr_tokens, env_node *env_head, int stat)
 					continue;
 				}
 			}
-			string[str_len++] = arr_tokens[0][i][j];
-			doll_flag++;
+			string[str_len++] = arr_tokens[0][i][j], doll_flag++;
 			if (str_len == str_size)
-				string = _realloc(string, str_size, str_size + BUFF_SIZE),
-				       str_size += BUFF_SIZE;
+			{
+				string = _realloc(string, str_size, str_size + BUFF_SIZE);
+				str_size += BUFF_SIZE;
+			}
 		}
 	}
-	string[str_len] = '\0';
-	arr_tokens[0][1] = string, arr_tokens[0][2] = NULL;
+	string[str_len] = '\0', arr_tokens[0][1] = string, arr_tokens[0][2] = NULL;
 	return (string);
 }
 

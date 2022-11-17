@@ -112,7 +112,7 @@ char *get_tokens(char *buffer, char ***arr_tokens, env_node *env_head)
 	arr_tokens[0][i++] = token;
 	token_zero = token;
 
-	while (token)
+	while (token && *token)
 	{
 		if (i == buff_size)
 		{
@@ -126,7 +126,8 @@ char *get_tokens(char *buffer, char ***arr_tokens, env_node *env_head)
 			buff_size += 70;
 		}
 		token = _strtok_and_cmnt(NULL, delim_str);
-		arr_tokens[0][i++] = token;
+		if (token && *token)
+			arr_tokens[0][i++] = token;
 	}
 	arr_tokens[0][i] = NULL;
 

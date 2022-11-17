@@ -59,7 +59,7 @@ void free_env_list(env_node *head);
 typedef struct command
 {
 	char *name;
-	char *(*op)(char **arr_tokens, env_node *env_head, char *buffer);
+	char *(*op)(char **arr_tokens, env_node *env_head, char *buffer, int);
 } cmds;
 
 extern char **environ;
@@ -74,14 +74,14 @@ char *_strtok_and_cmnt(char *str, const char *delim);
 void read_cmd_from_file(env_node *env_head, char *av, char *av1);
 
 /*prototypes for builtin functions*/
-char *_exit_th(char **arr_tokens, env_node *env_head, char *buffer);
-char *cd(char **arr_tokens, env_node *env_head, char *buffer);
-char *_setenv(char **arr_tokens, env_node *env_head, char *buffer);
-char *_unsetenv(char **arr_tokens, env_node *env_head, char *buffer);
-char *_env(char **arr_tokens, env_node *env_head, char *buffer);
+char *_exit_th(char **arr_tokens, env_node *env_head, char *buffer, int stat);
+char *cd(char **arr_tokens, env_node *env_head, char *buffer, int stat);
+char *_setenv(char **arr_tokens, env_node *env_head, char *buffer, int stat);
+char *_unsetenv(char **arr_tokens, env_node *env_head, char *buffer, int stat);
+char *_env(char **arr_tokens, env_node *env_head, char *buffer, int stat);
 
 /* execve */
-void exec_cmd(char *buffer, char **arr_tokens, char *cmd_full_path, char *av,
+int exec_cmd(char *buffer, char **arr_tokens, char *cmd_full_path, char *av,
 		size_t loop_count, env_node *env_head);
 void free_for_execve(char *cmd, char *echo_arg_string, char *buff,
 		char **arr_tokens, char **_env);
@@ -95,13 +95,14 @@ char *full_cmd(char *cmd, char *path);
 char *_getcmd(char *cmd, env_node *env_head);
 
 /* handle_cmds */
-char *handle_cmds(env_node *env_head, char *av, char *buffer,
+void handle_cmds(env_node *env_head, char *av, char *buffer,
 		size_t *loop_count);
 
 /* checks */
 void check_mul_cmds(env_node *env_head, char *av, char *buffer,
 		size_t *loop_count);
-char *check_builtins(char **arr_tokens, env_node *env_head, char *buffer);
+char *check_builtins(char **arr_tokens, env_node *env_head, char *buffer,
+		int stat);
 
 /* echo */
 char *sort_echo(char ***arr_tokens, env_node *env_head, int stat);

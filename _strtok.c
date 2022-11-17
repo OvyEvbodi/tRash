@@ -28,7 +28,7 @@ char *_strtok_and_cmnt(char *str, const char *delim)
 			if (*next_token && !*(next_token - 1))
 				break;
 		/* for handling comments */
-		if (*next_token == '#')
+		if (*next_token == '#' && !*(next_token - 1))
 		{
 			*next_token = '\0';
 			return (token);

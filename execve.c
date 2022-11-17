@@ -78,8 +78,10 @@ void free_for_execve(char *cmd, char *echo_arg_string, char *buff,
  * @av: Name of shell program.
  * @loop_count: Loop iteration.
  * @env_head: Head pointer to linked List of environment variables.
+ *
+ * Return: Exit status.
  */
-void exec_cmd(char *buffer, char **arr_tokens, char *cmd_full_path, char *av,
+int exec_cmd(char *buffer, char **arr_tokens, char *cmd_full_path, char *av,
 		size_t loop_count, env_node *env_head)
 {
 	char *echo_arg_string = NULL, **_env = NULL;
@@ -117,5 +119,6 @@ void exec_cmd(char *buffer, char **arr_tokens, char *cmd_full_path, char *av,
 		waitpid(pid, &status, 0);
 		free_for_execve(cmd_full_path, echo_arg_string, buffer, arr_tokens, _env);
 	}
+	return (WEXITSTATUS(status));
 }
 
