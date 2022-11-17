@@ -8,10 +8,11 @@
  */
 void eof(char *buffer, env_node *env_head, char flag)
 {
+	(void)flag;
 	free_env_list(env_head);
 	free(buffer);
-	if (flag == 1)
-		write(1, "\n", 1);
+/*	if (flag == 1)
+		write(1, "\n", 1);*/
 	exit(EXIT_SUCCESS);
 }
 

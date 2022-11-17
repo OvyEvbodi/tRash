@@ -20,7 +20,7 @@ char *handle_cmds(env_node *env_head, char *av, char *buffer,
 		return (NULL);
 	}
 	token_zero = get_tokens(buffer, &arr_tokens, env_head);
-	if (!*token_zero)
+	if (!token_zero || !*token_zero)
 	{
 		free(buffer);
 		free(arr_tokens);
