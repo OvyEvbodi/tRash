@@ -6,11 +6,11 @@
  * @av: Name of shell program.
  * @buffer: Commandline buffer from _getline.
  * @loop_count: Number of prompts displayed by our program.
+ * @status: Exit status.
  */
 void handle_cmds(env_node *env_head, char *av, char *buffer,
-		size_t *loop_count)
+		size_t *loop_count, int *status)
 {
-	static int status;
 	char **arr_tokens, *token_zero, *cmd_full_path;
 
 	if (!*buffer)
@@ -26,7 +26,7 @@ void handle_cmds(env_node *env_head, char *av, char *buffer,
 		return;
 	}
 
-	if (check_builtins(arr_tokens, env_head, buffer, status))
+	if (check_builtins(arr_tokens, env_head, buffer, *status))
 		return;
 
 	cmd_full_path = _getcmd(token_zero, env_head);
@@ -45,10 +45,10 @@ void handle_cmds(env_node *env_head, char *av, char *buffer,
 			write_to_stderr("%p: %n: %c: not found\n", av,
 					*loop_count, token_zero, NULL);
 		free(buffer), free(arr_tokens);
-		status = 2;
+		*status = 2;
 		return;
 	}
-	status = exec_cmd(buffer, arr_tokens, cmd_full_path, av, *loop_count,
-			env_head);
+	*status = exec_cmd(buffer, arr_tokens, cmd_full_path, av, *loop_count,
+			env_head, *status);
 }
 

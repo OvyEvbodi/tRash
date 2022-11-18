@@ -78,14 +78,14 @@ void free_for_execve(char *cmd, char *echo_arg_string, char *buff,
  * @av: Name of shell program.
  * @loop_count: Loop iteration.
  * @env_head: Head pointer to linked List of environment variables.
+ * @status: Exit status.
  *
  * Return: Exit status.
  */
 int exec_cmd(char *buffer, char **arr_tokens, char *cmd_full_path, char *av,
-		size_t loop_count, env_node *env_head)
+		size_t loop_count, env_node *env_head, int status)
 {
 	char *echo_arg_string = NULL, **_env = NULL;
-	static int status;
 	pid_t pid;
 
 	if (_strstr(cmd_full_path, "echo"))

@@ -82,7 +82,7 @@ char *_env(char **arr_tokens, env_node *env_head, char *buffer, int stat);
 
 /* execve */
 int exec_cmd(char *buffer, char **arr_tokens, char *cmd_full_path, char *av,
-		size_t loop_count, env_node *env_head);
+		size_t loop_count, env_node *env_head, int status);
 void free_for_execve(char *cmd, char *echo_arg_string, char *buff,
 		char **arr_tokens, char **_env);
 char **arrange_environ(char **_environ, env_node *head);
@@ -96,11 +96,11 @@ char *_getcmd(char *cmd, env_node *env_head);
 
 /* handle_cmds */
 void handle_cmds(env_node *env_head, char *av, char *buffer,
-		size_t *loop_count);
+		size_t *loop_count, int *status);
 
 /* checks */
 void check_mul_cmds(env_node *env_head, char *av, char *buffer,
-		size_t *loop_count);
+		size_t *loop_count, int *status);
 char *check_builtins(char **arr_tokens, env_node *env_head, char *buffer,
 		int stat);
 
@@ -117,7 +117,7 @@ char *handle_exp(char ***arr_tokens, env_node *env_head, char **string,
 		int stat);
 
 /* end */
-void eof(char *buffer, env_node *env_head, char flag);
+void eof(char *buffer, env_node *env_head, int status);
 void error_exit(char *msg, env_node *env_head);
 void exit_sh(char **arr_tokens, char *buffer, env_node *env_head);
 void exit_fail(char *msg, char *buffer, char **arr_tokens, env_node *env_head);

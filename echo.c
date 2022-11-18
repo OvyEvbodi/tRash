@@ -20,16 +20,9 @@ char *mov_num_vals(char **string, size_t *str_len, size_t *str_size,
 	pid_t num = 0;
 
 	if (type == PID)
-	{
 		num = getpid();
-	}
 	else
-	{
-		if (WIFEXITED(status))
-			num = WEXITSTATUS(status);
-		else
-			num = 1;
-	}
+		num = status;
 
 	char_tmp_malloc = conv_to_char(num);
 	while (char_tmp_malloc[num_len])

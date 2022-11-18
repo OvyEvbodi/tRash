@@ -42,9 +42,10 @@ char *check_builtins(char **arr_tokens, env_node *env_head, char *buffer,
  * @av: Name of shell program.
  * @buffer: Commandline buffer from _getline.
  * @loop_count: Number of prompts printed.
+ * @status: Exit status.
  */
 void check_mul_cmds(env_node *env_head, char *av, char *buffer,
-		size_t *loop_count)
+		size_t *loop_count, int *status)
 {
 	size_t i, j = 0, buff_size = BUFF_SIZE;
 	char *pass_buff, hash = NO;
@@ -79,7 +80,7 @@ void check_mul_cmds(env_node *env_head, char *av, char *buffer,
 				pass_buff[j - 1] = '\0';
 			else
 				pass_buff[j] = '\0';
-			handle_cmds(env_head, av, pass_buff, loop_count);
+			handle_cmds(env_head, av, pass_buff, loop_count, status);
 			if (hash)
 				break;
 			j = 0;
