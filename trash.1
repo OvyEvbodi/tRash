@@ -1,0 +1,41 @@
+.\" Manpage for tRash
+.\" Contact ecokeke21@gmail.com or evbodiovo@gmail.com to report errors and bugs
+.TH "TRASH MAN PAGE" 1 "2022-11-16" "GNU" "Linux Programmer's Manual"
+.SH NAME
+tRash \- GNU TRagically Awesome SHell
+.SH SYNOPSIS
+ ./tRash 
+.SH DESCRIPTION
+tRash is a command line interpreter designed to be sh-compatible. It reads and executes commands from the standadard input or from a file.
+tRash is capable of executing any valid executable within a machine. If the absolute path to a particular file with execute permission(s) is not specified, tRash sarches all paths in the machine, to find a valid absolute path to the command.
+.SH INVOCATION
+tRash can be invocked interactively of non-interactively.
+In interactive mode, the TRagically Awesome SHell is invocked by calling its name in the current directory - "./trash"
+In non-interactive mode, another shell reads and executes a command, and the output is piped into the input stream of the TRagically Awesome SHell.
+.SH MULTIPLE COMMANDS
+The semi-colon(;) is used to seperate commands within tRash. Each command is ended with a semi-colon, and the suceeding command follows.
+.SH COMMENTS
+Comments are started with a hash symbol(#). Any data that follows the '#' is ignored. Suceeding commands are not read from comments.
+.SH BUILTINS
+tRash has implementations of the following builtin commands:
+.SH CD
+Changes the present working directory to that specified in the next argument.
+If no directory is specified, it changes it to the home directory as specified within the current environment.
+If a dash(-) is the next argument, it changes it to the previous directory. If this command is repeated with the same dash argument, the result toggles between the two most recent working directories.
+If cd's next argument is "..", it changes it to the parent directory. 
+The present working directory(PWD) environment variable is updated after every call to the cd builtin command. 
+.SH EXIT
+Terminates the current process of a tRash instance, and exits with a status.
+If the next argument is not specified, the shell is terminated with an exit status of 0.
+The status must be a positive integer. If it is a number greater than 255, the instance is exited with the result of the number modulus 256.
+The shell instance continues to run if an illegal status is specified.
+If any other arguments exist, they are ignored, and the shell instance is exited with the status specified, if valid, or 0.
+.SH ENV 
+This builtin command prints out a list of all the set environment variables.
+The variable name is conventionally written in block letters, then an equal to sign precedes the variable value. Every variable is printed on a new line.
+.SH SETENV 
+This command sets a new environment variable and updates the pre-existing varianles list with the newly set one.
+If the variable name specified already exists, it modifies the value by overwriting it withe the new one, else, it initializes the new variable with the specified value.
+.SH UNSETENV
+This builtin vommand removes an existing environment variable from the environment list.
+If the variable doesn't exist, an error message is thrown, otherwis, the variable is deleted from the list.
