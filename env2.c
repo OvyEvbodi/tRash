@@ -94,7 +94,7 @@ void call_create(char **name, char **value, env_node **head)
  */
 env_node *env_list(char **env)
 {
-	size_t i, j, k, buff_ind, flag, size;
+	size_t i, j, k, buff_ind, flag, size, buff_size = BUFF_SIZE;
 	char *name = NULL, *value = NULL, *buff = malloc(BUFF_SIZE);
 	env_node *head = NULL;
 
@@ -120,6 +120,11 @@ env_node *env_list(char **env)
 				break;
 			}
 			buff[buff_ind++] = env[i][j];
+			if (buff_ind == buff_size)
+			{
+				buff = _realloc(buff, buff_size, buff_size + BUFF_SIZE);
+				buff_size += BUFF_SIZE;
+			}
 		}
 		call_create(&name, &value, &head);
 	}

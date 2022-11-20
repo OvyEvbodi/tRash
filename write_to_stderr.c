@@ -14,7 +14,7 @@ int write_to_stderr(char *format, char *arg_zero, size_t loop_count,
 		char *tok_zero, char *tok_one)
 {
 	int i, j = 0, buff_ind = 0;
-	char buffer[BUFF_SIZE], *num;
+	char buffer[1024], *num;
 
 	for (i = 0; format[i]; i++)
 	{

@@ -11,7 +11,7 @@
 #include <sys/stat.h>
 #include <errno.h>
 
-#define BUFF_SIZE	1024
+#define BUFF_SIZE	24
 #define NO_VALID_CHAR	0
 #define VALID_CHAR	1
 #define NO		0
