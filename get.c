@@ -14,7 +14,7 @@ char *_getenv(char *var, env_node *env_head)
 
 	while (env_head)
 	{
-		if (_strncmp(env_head->name, var, var_len) == 0)
+		if (_strncmp(env_head->name, var, var_len + 1) == 0)
 		{
 			var_val = env_head->value;
 			break;
