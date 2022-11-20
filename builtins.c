@@ -46,7 +46,7 @@ char *cd(char **arr_tokens, env_node *env_head, char *buffer, int stat)
 	if (!arr_tokens[1])
 	{
 		pwd = _getenv("HOME", env_head);
-		if (chdir(pwd) == 0)
+		if (pwd && chdir(pwd) == 0)
 		{
 			update_var_for_cd(env_head, arr_tokens, buffer, pwd, oldpwd);
 			return ("ok");
@@ -57,14 +57,15 @@ char *cd(char **arr_tokens, env_node *env_head, char *buffer, int stat)
 		if (_strcmp(arr_tokens[1], "-") == 0)
 		{
 			pwd = _getenv("OLDPWD", env_head);
-			if (chdir(pwd) == 0)
+			if (pwd && chdir(pwd) == 0)
 			{
 				write(1, pwd, _strlen(pwd));
 				write(1, "\n", 1);
 				update_var_for_cd(env_head, arr_tokens, buffer, pwd, oldpwd);
 				return ("ok");
 			}
-			write(1, oldpwd, _strlen(oldpwd)), write(1, "\n", 1), free(oldpwd);
+			write(1, oldpwd, _strlen(oldpwd)), write(1, "\n", 1), free(buffer);
+			free(arr_tokens), free(oldpwd);
 			return ("ok");
 		}
 		else if (chdir(arr_tokens[1]) == 0)
