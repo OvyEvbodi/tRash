@@ -96,3 +96,7 @@ Tue Nov 15 06:05:23 2022
 Tue Nov 15 06:06:13 2022
  From Ovy: Dpmax, I haven't tried to clean up the memory of the alias builtin yet, bear with me, I'll try my best as soon as I have a working feature.
 
+Sun Nov 20 14:54:13 2022
+From Ovy: Dp, do you think we could have a seperate macro for our default buff-size of 1024 characters? Just so we don't confuse ourselves moving forward.
+Amazing work fixing our bugs, thank you.
+The man page is up, I'll fix the README and update it soon.
