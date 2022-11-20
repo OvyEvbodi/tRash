@@ -42,6 +42,7 @@ typedef struct env
 } env_node;
 
 env_node *env_list(char **env);
+void call_create(char **name, char **value, env_node **head);
 env_node *create_env_list(env_node **head, char *name, char *value);
 env_node *create_env_node(char *name, char *value);
 env_node *add_to_existing(env_node **head, char *name, char *value);
@@ -97,6 +98,8 @@ char *_getcmd(char *cmd, env_node *env_head);
 /* handle_cmds */
 void handle_cmds(env_node *env_head, char *av, char *buffer,
 		size_t *loop_count, int *status);
+void display_err(char *token_zero, char **arr_tokens, size_t loop_count,
+		char *av, int *status);
 
 /* checks */
 void check_mul_cmds(env_node *env_head, char *av, char *buffer,
