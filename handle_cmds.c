@@ -11,7 +11,7 @@
 void handle_cmds(env_node *env_head, char *av, char *buffer,
 		size_t *loop_count, int *status)
 {
-	char **arr_tokens, *token_zero, *cmd_full_path;
+	char **arr_tokens = NULL, *token_zero = NULL, *cmd_full_path = NULL;
 
 	if (!*buffer)
 	{

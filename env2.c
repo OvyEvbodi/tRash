@@ -61,6 +61,32 @@ char *handle_env_value(char **env, char **value, char *buff, char *name,
 }
 
 /**
+ * call_create - Calls the create_env_list function.
+ * @name: Pointer to name of variable.
+ * @value: Pointer to value of variable.
+ * @head: Head pointer to linked list.
+ */
+void call_create(char **name, char **value, env_node **head)
+{
+	static int node_start = NO;
+
+	if (*name && *value)
+	{
+		if (node_start == NO)
+		{
+			node_start = YES;
+			*head = create_env_list(head, *name, *value), *name = NULL, *value = NULL;
+		}
+		else
+			create_env_list(head, *name, *value), *name = NULL, *value = NULL;
+	}
+	else if (*name)
+		free(*name);
+	else
+		free(*value);
+}
+
+/**
  * env_list - Starts the process of creating a linked list of env variables.
  * @env: An array of environment variables.
  *
@@ -68,7 +94,7 @@ char *handle_env_value(char **env, char **value, char *buff, char *name,
  */
 env_node *env_list(char **env)
 {
-	size_t i, j, k, buff_ind, flag, size, node_start = NO;
+	size_t i, j, k, buff_ind, flag, size;
 	char *name = NULL, *value = NULL, *buff = malloc(BUFF_SIZE);
 	env_node *head = NULL;
 
@@ -95,16 +121,7 @@ env_node *env_list(char **env)
 			}
 			buff[buff_ind++] = env[i][j];
 		}
-		if (name && value)
-		{
-			if (node_start == NO)
-			{
-				node_start = YES;
-				head = create_env_list(&head, name, value), name = NULL, value = NULL;
-			}
-			else
-				create_env_list(&head, name, value), name = NULL, value = NULL;
-		}
+		call_create(&name, &value, &head);
 	}
 	free(buff);
 	return (head);

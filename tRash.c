@@ -9,10 +9,10 @@
  */
 int main(int argc, char **argv)
 {
-	char *buffer, **env = environ;
-	size_t buff_size, loop_count = 0;
-	env_node *env_head = env_list(env);
+	char *buffer = NULL, **env = environ;
+	size_t buff_size = 0, loop_count = 0;
 	static int status;
+	env_node *env_head = env_list(env);
 
 	if (!env_head)
 	{
@@ -25,9 +25,7 @@ int main(int argc, char **argv)
 
 	while (1)
 	{
-		buffer = NULL;
-		buff_size = 0;
-		loop_count++;
+		buffer = NULL, buff_size = 0, loop_count++;
 		write(0, "tRash>>$ ", 9);
 
 		if (_getline(&buffer, &buff_size, 0) == -1)

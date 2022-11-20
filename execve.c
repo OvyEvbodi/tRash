@@ -21,15 +21,23 @@ char **arrange_environ(char **_environ, env_node *head)
 		if (i == size)
 		{
 			_environ = _realloc(_environ, sizeof(char *) * size,
-					sizeof(char *) * size + size / 2);
+					sizeof(char *) * (size + (size / 2)));
 			if (!_environ)
 				return (NULL);
-			size += size / 2;
+			size += (size / 2);
 		}
 		tmp = str_concat(head->name, head->equals);
 		_environ[i++] = str_concat(tmp, head->value);
 		free(tmp);
 		head = head->next;
+	}
+	if (i == size)
+	{
+		_environ = _realloc(_environ, sizeof(char *) * size,
+				sizeof(char *) * (size + 1));
+		if (!_environ)
+			return (NULL);
+		size++;
 	}
 	_environ[i] = NULL;
 	return (_environ);

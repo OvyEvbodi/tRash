@@ -39,13 +39,20 @@ char *_exit_th(char **arr_tokens, env_node *env_head, char *buffer, int stat)
 */
 char *cd(char **arr_tokens, env_node *env_head, char *buffer, int stat)
 {
-	char *pwd, *oldpwd;
+	char *pwd = NULL, *oldpwd = NULL;
 
 	(void)stat;
-	if (arr_tokens[2])
-		return (NULL);
 	oldpwd = getcwd(NULL, 0);
-	if (arr_tokens[1])
+	if (!arr_tokens[1])
+	{
+		pwd = _getenv("HOME", env_head);
+		if (chdir(pwd) == 0)
+		{
+			update_var_for_cd(env_head, arr_tokens, buffer, pwd, oldpwd);
+			return ("ok");
+		}
+	}
+	else if (arr_tokens[1] && !arr_tokens[2])
 	{
 		if (_strcmp(arr_tokens[1], "-") == 0)
 		{
@@ -65,15 +72,6 @@ char *cd(char **arr_tokens, env_node *env_head, char *buffer, int stat)
 			pwd = getcwd(NULL, 0);
 			update_var_for_cd(env_head, arr_tokens, buffer, pwd, oldpwd);
 			free(pwd);
-			return ("ok");
-		}
-	}
-	else
-	{
-		pwd = _getenv("HOME", env_head);
-		if (chdir(pwd) == 0)
-		{
-			update_var_for_cd(env_head, arr_tokens, buffer, pwd, oldpwd);
 			return ("ok");
 		}
 	}
