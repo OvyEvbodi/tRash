@@ -21,14 +21,11 @@ void handle_cmds(env_node *env_head, char *av, char *buffer,
 	token_zero = get_tokens(buffer, &arr_tokens, env_head);
 	if (!token_zero || !*token_zero)
 	{
-		free(buffer);
-		free(arr_tokens);
+		free(buffer), free(arr_tokens);
 		return;
 	}
-
 	if (check_builtins(arr_tokens, env_head, buffer, *status))
 		return;
-
 	cmd_full_path = _getcmd(token_zero, env_head);
 	if (!cmd_full_path)
 	{
@@ -37,15 +34,19 @@ void handle_cmds(env_node *env_head, char *av, char *buffer,
 			if (arr_tokens[1])
 				write_to_stderr("%p: %n: cd: can't cd to %r\n", av,
 					*loop_count, NULL, arr_tokens[1]);
+			*status = 2;
 		}
 		else if (_strcmp(token_zero, "exit") == 0)
+		{
 			write_to_stderr("%p: %n: exit: Illegal number: %r\n", av,
-					*loop_count, NULL, arr_tokens[1]);
+					*loop_count, NULL, arr_tokens[1]), *status = 2;
+		}
 		else
+		{
 			write_to_stderr("%p: %n: %c: not found\n", av,
-					*loop_count, token_zero, NULL);
+					*loop_count, token_zero, NULL), *status = 127;
+		}
 		free(buffer), free(arr_tokens);
-		*status = 2;
 		return;
 	}
 	*status = exec_cmd(buffer, arr_tokens, cmd_full_path, av, *loop_count,
