@@ -16,10 +16,9 @@ void read_cmd_from_file(env_node *env_head, char *av, char *av1)
 	rd_fd = open(av1, O_RDONLY);
 	if (rd_fd == -1)
 	{
-		write_to_stderr("%p: %n: cannot open %c: No such file\n",
-				av, loop_count, av1, NULL);
+		write_to_stderr("%p: %n: Can't open %c\n", av, loop_count, av1, NULL);
 		free_env_list(env_head);
-		exit(2);
+		exit(127);
 	}
 
 	while (1)
