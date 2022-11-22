@@ -1,0 +1,59 @@
+.\" Manpage for tRash
+.\" Contact ecokeke21@gmail.com or evbodiovo@gmail.com to report errors and bugs
+.TH "TRASH MAN PAGE" 1 "2022-11-16" "GNU" "Linux Programmer's Manual"
+.SH NAME
+tRash \- GNU TRagically Awesome SHell
+.SH SYNOPSIS
+\fB./tRash\fP [file with commands]
+.SH DESCRIPTION
+\fBtRash\fP is a command line interpreter wholly written by Ovy Evbodi and Chee-zaram Okeke based off the \fBsh\fP shell. It reads and executes commands from the standard input or the terminal by default, or from a file specified as a command line argument to the shell.
+\fBtRash\fP is capable of running any valid executable with options within a machine. If the absolute path to a particular file with execute permission(s) is not specified, tRash searches all directories in the $\fBPATH\fP available to it to find a valid absolute path to the command, except in the case where the command is a built-in, then it is handled immediately and \fBexecve\fP is not called.
+For commands not found, an error message is displayed to standard error and the exit status is set to 127.
+.SH INVOCATION
+\fBtRash\fP can be invoked interactively or non-interactively.
+In interactive mode, the TRagically Awesome SHell is invoked by calling its name in the current directory - "./tRash", or "tRash" if the executable has been added to a directory present in $\fBPATH.\fP A prompt is displayed and the user enters in commands from the terminal, ending with a new line or an \fBEOF.\fP
+In non-interactive mode, another shell could read and execute commands, and the output is piped into the input stream of the TRagically Awesome SHell. The shell exits after all the commands piped into it have been executed. Commands could also be contained in a file with read permission, provided as a command line argument to the program. If more than one argument is provided, the first one is assumed to be the file with the commands to be executed, separated by a new line or semi-colon, and ending with an \fBEOF.\fP
+.SH MULTIPLE COMMANDS
+The semi-colon(;) is used to seperate commands within tRash. Each command is ended with a semi-colon, and the succeeding command follows.
+.SH COMMENTS
+Comments are started with a hash symbol(#). Any data that follows the '#' is ignored only if the hash symbol follows a non-printable character, otherwise the symbol loses its special meaning. All data that succeed a valid '#' are treated as command line comments and therefore are not processed.
+.SH BUILT-INS
+\fBtRash\fP has implementations of the following built-in commands:
+.SS cd [directory]
+Changes the present working directory to that specified in the next argument.
+If no directory is specified, it changes it to the directory specified in $\fBHOME\fP environment variable within the current environment. If no $\fBHOME\fP variable and value exist, or the directory is not accessible, an error message is printed to standard error.
+If a dash(-) is the option to \fBcd\fP, it changes the current working directory to the directory specified by the environment variable $\fBOLDPWD\fP in the current environment. If this command is repeated with the same dash argument, the result toggles between the two most recent working directories.
+If \fBcd\fP's next argument is "..", it changes it to the parent directory.
+The $\fBPWD\fP and $\fBOLDPWD\fP are updated after every successful call to the built-in command.
+\fBcd\fP sets the exit status to 2 if it could not change directories successfully.
+.SS exit [status]
+Terminates the current process of a \fBtRash\fP instance, and exits with a status.
+If the next argument is not specified, the shell is terminated with the exit status of the last command executed, or 0 if exit was the first command run.
+The status must be a positive integer. If it is a number greater than 255, the instance is exited with the result of the number modulus 256.
+The shell instance continues to run if an illegal status is specified.
+If any other arguments exist, they are ignored, and the shell instance is exited with the status specified by the first option to exit, if valid.
+\fBexit\fP sets the status to 2 if it could not exit successfully.
+.SS env
+This built-in command prints out a list of all the set environment variables in the current environment. A newer instance of the shell process run from within \fBtRash\fP inherits the environment of the parent shell process.
+The variable name is conventionally written in block letters, then an assignment symbol "=" precedes the variable value. Every variable is printed on a new line.
+If an argument is passed to env, env is ignored and the argument is treated as a new command passed to the shell.
+.SS setenv NAME value
+This command sets a new environment variable and updates the pre-existing variables list with the newly set one.
+If the variable name specified already exists, it modifies the value by over-writing it with the new value, else, it initializes the new variable with the specified value and adds it to the list of environment variables.
+.SS unsetenv NAME
+This builtin command removes an existing environment variable from the environment list.
+If the variable doesn't exist, an error message is thrown, otherwis, the variable is deleted from the list.
+.SH EXIT STATUS
+.TP
+\fB0\fP
+For success.
+.TP
+\fB1\fP
+Usage, syntax, or processing errors.
+.SH BUGS
+If the first variable listed in the result from \fBenv\fP is unset, there will be a memory error.
+\fBecho\fP runs with an external implementation via an executable found in $\fBPATH\fP. If not present, \fBecho\fP will fail. If characters after \fBecho\fP are up to 4090, everything that comes after will be truncated.
+.SH AUTHORS
+Ovy Evbodi (evbodiovo@gmail.com) and Chee-zaram Okeke (ecokeke21@gmail.com)
+.SH SEE ALSO
+chdir(2), execve(2), exit(3), fork(2), free(3), getcwd(3), malloc(3), open(2), read(2), sh(1), stat(2), waitpid(2), write(2)
