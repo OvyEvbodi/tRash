@@ -1,26 +1,28 @@
-## tRash
+# TRagically Awesome SHell
+
+[![License][license-badge]][license]
+[![Contributors][contributors-badge]][contributors]
 
 ---
 
 ---
 
-#### Description
+## Description
 
-The TRagically Awesome SHell--**tRash** is a command line interpreter wholly written
-by Ovy Evbodi and Chee-zaram Okeke based off the `sh` shell. It reads and executes
-commands from the standard input or the terminal by default, or from a file specified
-as a command line argument to the shell.
+The TRagically Awesome SHell-- _tRash_ is a command-line interpreter based off the `sh` shell.
+It reads and executes commands from the standard input or the terminal by default,
+or from a file specified as a command line argument to the shell.
 `tRash` is capable of running any valid executable with options within a machine.
 If the absolute path to a particular file with execute permission(s) is not specified,
 `tRash` searches all directories in the `$PATH` available to it to find a valid
 absolute path to the command, except in the case where the command is a <a href="#built-ins">built-in</a>,
 then it is handled immediately and `execve` is not called.<br>
 
-#### Use environment
+## Build and Installation
 
 It can be built and run on any computer with C compiler, and accessed via a [terminal](https://ubuntu.com/tutorials/command-line-for-beginners).
 
-##### Getting started with tRash
+### Installation
 
 Dependencies include `make`, `gcc`, `gzip`, `mandb`. Ensure you have them installed.
 
@@ -56,11 +58,21 @@ man tRash
 make clean
 ```
 
-#### Usage and Invocation
+### Usage and Invocation
 
 `tRash` can be invoked interactively or non-interactively.
-In interactive mode, it is invoked by calling its name in the current directory - `./tRash`,
-or `tRash` if the executable has been added to a directory present in `$PATH`.
+In interactive mode, it is invoked by calling its name in the current directory:
+
+```shell
+./tRash
+```
+
+If the executable has been added to a directory present in `$PATH`, you could run:
+
+```shell
+tRash
+```
+
 A prompt is displayed and the user enters in commands from the terminal, ending with a new line or an `EOF`.
 In non-interactive mode, another shell could read and execute commands, and the output
 is piped into the input stream of the TRagically Awesome SHell.
@@ -71,8 +83,6 @@ with the commands to be executed, separated by a new line or semi-colon, and end
 
 ---
 
----
-
 ###### Multiple Commands
 
 The semi-colon `;` is used to seperate commands on the command-line.
@@ -80,7 +90,7 @@ Each command is ended with a semi-colon, and the succeeding command(s) follows.
 
 ###### Comments
 
-Comments are started with a hash symbol(#). Any data that follows the `#` is ignored
+Comments are started with a hash symbol `#`. Any data that follows the `#` is ignored
 only if the hash symbol follows a non-printable character, otherwise the symbol loses its special meaning.
 All data that succeed a valid `#` are treated as command-line comments and therefore are not processed.
 <a id="built-in"></a>
@@ -104,18 +114,18 @@ These provide some extra flexibilty.
 | **0** | For success.                         |
 | **1** | Usage, syntax, or processing errors. |
 
-#### AUTHORS
+### AUTHORS
 
 [**Chee-zaram Okeke**](https://github.com/chee-zaram)
 
 [**Ovy Evbodi**](https://github.com/OvyEvbodi)
 <br><br>
 
-#### BUGS
+### BUGS
 
 To report bugs and make contributions or feature requests, [click here](https://github.com/OvyEvbodi/simple_shell/issues)
 
-#### NOTE
+### NOTE
 
 The original version of `tRash` was made for educational purposes and resticted function use to the following.
 Every other function was created from scratch.
@@ -152,3 +162,8 @@ Every other function was created from scratch.
   > wait3 (man 2 wait3)
   > wait4 (man 2 wait4)
   > write (man 2 write)
+
+[license-badge]: https://img.shields.io/github/license/chee-zaram/monty
+[license]: https://github.com/OvyEvbodi/tRash/blob/master/LICENSE
+[contributors-badge]: https://img.shields.io/github/contributors/OvyEvbodi/tRash
+[contributors]: https://github.com/OvyEvbodi/simple_shell/graphs/contributors
