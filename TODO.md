@@ -1,0 +1,3 @@
+- Implement `alias` built-in.
+- Implement logical operators `&&`, `||`
+- Make variable expansion work across the board, not only for `echo`
