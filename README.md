@@ -9,7 +9,7 @@
 
 ## Description
 
-The TRagically Awesome SHell-- _tRash_ is a command-line interpreter based off the `sh` shell.
+The TRagically Awesome SHell-- _tRash_ --is a command-line interpreter based off the `sh` shell.
 It reads and executes commands from the standard input or the terminal by default,
 or from a file specified as a command line argument to the shell.
 `tRash` is capable of running any valid executable with options within a machine.
@@ -29,33 +29,39 @@ Dependencies include `make`, `gcc`, `gzip`, `mandb`. Ensure you have them instal
 - Clone this repository and navigate into the local `tRash/build/` directory
 
 ```shell
-git clone https://github.com/OvyEvbodi/tRash/ tRash
-cd tRash/build/
+git clone https://github.com/OvyEvbodi/tRash/ tRash ;
+cd tRash/build/ ;
 ```
 
-- To build `tRash` and run it in the current directory, use the following command only
+- To build `tRash` and run it in the current directory, use the following command:
 
 ```shell
-make build
+make
 ```
 
 - For the complete installation, and to add `tRash` to a standard location and install
-  the [manpage](https://en.wikipedia.org/wiki/Man_page), continue with the following
+  the [manpage](https://en.wikipedia.org/wiki/Man_page), run:
 
 ```shell
-make tRash
+make install
 ```
 
-- For help, checkout the manpage
+- To uninstall the `tRash` binary, run:
 
 ```shell
-man tRash
+make uninstall
 ```
 
-- To uninstall `tRash`, run
+- For a complete clean of the `tRash` binary as well as all object files, run:
 
 ```shell
 make clean
+```
+
+- For help, checkout the manpage:
+
+```shell
+man tRash
 ```
 
 ### Usage and Invocation
